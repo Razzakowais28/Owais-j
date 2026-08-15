@@ -1,71 +1,27 @@
 {
-  "lastUpdated": "2026-08-15T21:27:00Z",
+  "lastUpdated": "2026-08-15T21:37:00Z",
   "jobs": [
     {
-      "id": "tabeq-fullstack-riyadh",
-      "title": "Full Stack Developer",
-      "company": "Tabeq",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "Bayt",
-      "postedDate": "2026-08-08",
-      "applyUrl": "https://www.bayt.com/en/job/apply/index/5475027/",
-      "jobUrl": "https://www.bayt.com/en/job/apply/index/5475027/"
-    },
-    {
-      "id": "primegate-fullstack-riyadh",
-      "title": "Full Stack Developer",
-      "company": "PrimeGate for Communications and IT",
+      "id": "innovationteam-ai-riyadh",
+      "title": "AI Engineer",
+      "company": "InnovationTeam",
       "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-07-20",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/full-stack-developer-at-primegate-for-communications-and-it-4442003299",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/full-stack-developer-at-primegate-for-communications-and-it-4442003299"
+      "postedDate": "2026-08-15",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453"
     },
     {
-      "id": "raya-erpnext",
-      "title": "ERPNext Developer",
-      "company": "Raya logistic services",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
+      "id": "akkodis-cloud-khobar",
+      "title": "Cloud Engineer",
+      "company": "Akkodis",
+      "location": "Al Khobar, Saudi Arabia",
+      "city": "Al Khobar",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://forms.gle/MW5a2rNJoNVwYmb57",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/erpnext-developer-at-raya-logistic-services-4450147416"
-    },
-    {
-      "id": "tamara-pe2web-riyadh",
-      "title": "Product Engineer II - Web",
-      "company": "Tamara",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-10",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024"
-    },
-    {
-      "id": "fip-educational-app",
-      "title": "Educational Application Developer",
-      "company": "Food Industries Polytechnic",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-09",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609"
-    },
-    {
-      "id": "raqmiyat-dotnet-fullstack-riyadh",
-      "title": "Dot Net Full Stack Developer",
-      "company": "Raqmiyat L.L.C",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "NaukriGulf",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451",
-      "jobUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451"
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481"
     },
     {
       "id": "jal-erp-specialist-dhahran",
@@ -79,37 +35,59 @@
       "jobUrl": "https://sa.linkedin.com/jobs/view/enterprise-resource-planning-erp-specialist-at-jal-international-co-ltd-4452920284"
     },
     {
-      "id": "pwc-ai-frontend-associate-riyadh",
-      "title": "AI Frontend Engineer - Associate",
-      "company": "PwC Middle East",
+      "id": "masterworks-ai-agentic-riyadh",
+      "title": "AI Engineer - Agentic",
+      "company": "Master Works",
       "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-06",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-frontend-engineer-associate-riyadh-at-pwc-middle-east-4450228833",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-frontend-engineer-associate-riyadh-at-pwc-middle-east-4450228833"
+      "postedDate": "2026-08-13",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627"
     },
     {
-      "id": "jal-app-developer-dhahran",
-      "title": "Application Developer",
-      "company": "JAL International Co. Ltd.",
-      "location": "Dhahran, Saudi Arabia",
-      "city": "Dammam",
-      "platform": "LinkedIn",
-      "postedDate": "2026-07-26",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/application-developer-at-jal-international-co-ltd-4444830047",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/application-developer-at-jal-international-co-ltd-4444830047"
-    },
-    {
-      "id": "adree-liferay-riyadh",
-      "title": "UI (Liferay) Developer",
-      "company": "Adree",
+      "id": "raya-erpnext",
+      "title": "ERPNext Developer",
+      "company": "Raya logistic services",
       "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-03",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ui-liferay-developer-at-adree-4448166341",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ui-liferay-developer-at-adree-4448166341"
+      "postedDate": "2026-08-12",
+      "applyUrl": "https://forms.gle/MW5a2rNJoNVwYmb57",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/erpnext-developer-at-raya-logistic-services-4450147416"
+    },
+    {
+      "id": "raqmiyat-dotnet-fullstack-riyadh",
+      "title": "Dot Net Full Stack Developer",
+      "company": "Raqmiyat L.L.C",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "NaukriGulf",
+      "postedDate": "2026-08-12",
+      "applyUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451",
+      "jobUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451"
+    },
+    {
+      "id": "masterworks-bi-riyadh",
+      "title": "Business Intelligence Developer",
+      "company": "Master Works",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-12",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299"
+    },
+    {
+      "id": "bmchelix-productdev-riyadh",
+      "title": "Product Developer - Saudi Arabia",
+      "company": "BMC Helix",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-12",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144"
     },
     {
       "id": "tamara-pe2qa-riyadh",
@@ -134,59 +112,26 @@
       "jobUrl": "https://sa.linkedin.com/jobs/view/senior-react-native-developer-at-%D8%B3%D9%88%D9%8A%D8%AA%D8%B1-sweater-4452430517"
     },
     {
-      "id": "masterworks-bi-riyadh",
-      "title": "Business Intelligence Developer",
-      "company": "Master Works",
+      "id": "tamara-pe2web-riyadh",
+      "title": "Product Engineer II - Web",
+      "company": "Tamara",
       "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299"
+      "postedDate": "2026-08-10",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024"
     },
     {
-      "id": "masterworks-ai-agentic-riyadh",
-      "title": "AI Engineer - Agentic",
-      "company": "Master Works",
+      "id": "fip-educational-app",
+      "title": "Educational Application Developer",
+      "company": "Food Industries Polytechnic",
       "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627"
-    },
-    {
-      "id": "innovationteam-ai-riyadh",
-      "title": "AI Engineer",
-      "company": "InnovationTeam",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-15",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453"
-    },
-    {
-      "id": "bmchelix-productdev-riyadh",
-      "title": "Product Developer - Saudi Arabia",
-      "company": "BMC Helix",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144"
-    },
-    {
-      "id": "akkodis-cloud-khobar",
-      "title": "Cloud Engineer",
-      "company": "Akkodis",
-      "location": "Al Khobar, Saudi Arabia",
-      "city": "Al Khobar",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481"
+      "postedDate": "2026-08-09",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609"
     }
   ]
 }

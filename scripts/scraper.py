@@ -4,7 +4,7 @@ Data refresh script. Runs on a schedule via GitHub Actions.
 """
 
 import os, json, time, hashlib, requests
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 APIFY_TOKEN = os.environ.get("APIFY_TOKEN", "")
 BASE = "https://api.apify.com/v2"
@@ -18,6 +18,7 @@ KEYWORDS = [
     "nodejs developer",
 ]
 
+MAX_AGE_DAYS = 7
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 JOBS_FILE = os.path.join(DATA_DIR, "items.json")
 SEEN_FILE = os.path.join(DATA_DIR, "seen.json")
@@ -43,6 +44,16 @@ def job_key(title, company):
 def city_match(location_str):
     loc = (location_str or "").lower()
     return any(c in loc for c in TARGET_CITIES)
+
+def posted_within(posted, days=MAX_AGE_DAYS):
+    if not posted:
+        return False
+    try:
+        d = datetime.strptime(str(posted)[:10], "%Y-%m-%d").date()
+    except ValueError:
+        return False
+    cutoff = datetime.now(timezone.utc).date() - timedelta(days=days)
+    return d >= cutoff
 
 def run_actor(actor_slug, input_body, wait_secs=120):
     """Start an Apify actor run, wait for completion, return dataset items."""
@@ -213,6 +224,8 @@ def main():
         jid = j["id"]
         if not j["title"] or not j["company"]:
             continue
+        if not posted_within(j.get("postedDate")):
+            continue
         tc_key = f"{j['title'].strip()}|{j['company'].strip()}"
         if jid in seen_ids or jid in existing_ids or jid in seen_in_this_run:
             continue
@@ -223,23 +236,34 @@ def main():
 
     print(f"\nFound {len(raw)} raw jobs → {len(new_jobs)} new after dedup/filter")
 
-    if not new_jobs:
-        print("No new jobs — nothing to commit.")
+    merged = []
+    seen_merge = set()
+    for j in new_jobs + jobs_data.get("jobs", []):
+        jid = j.get("id")
+        if not jid or jid in seen_merge:
+            continue
+        if not posted_within(j.get("postedDate")):
+            continue
+        seen_merge.add(jid)
+        merged.append(j)
+
+    if merged == jobs_data.get("jobs", []) and not new_jobs:
+        print("No new jobs and no stale rows to drop.")
         return
 
-    # Prepend new jobs (newest first)
-    jobs_data["jobs"] = new_jobs + jobs_data.get("jobs", [])
+    jobs_data["jobs"] = merged
     jobs_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     save_json(JOBS_FILE, jobs_data)
 
-    seen_data["seenIds"] = list(seen_ids | {j["id"] for j in new_jobs})
-    seen_data["seenTitlesCompanies"] = list(set(
-        seen_data.get("seenTitlesCompanies", []) +
-        [f"{j['title'].strip()}|{j['company'].strip()}" for j in new_jobs]
-    ))
-    save_json(SEEN_FILE, seen_data)
+    if new_jobs:
+        seen_data["seenIds"] = list(seen_ids | {j["id"] for j in new_jobs})
+        seen_data["seenTitlesCompanies"] = list(set(
+            seen_data.get("seenTitlesCompanies", []) +
+            [f"{j['title'].strip()}|{j['company'].strip()}" for j in new_jobs]
+        ))
+        save_json(SEEN_FILE, seen_data)
 
-    print(f"Done. Added {len(new_jobs)} new items. items.json updated.")
+    print(f"Done. Added {len(new_jobs)} new items. Keeping {len(merged)} from last {MAX_AGE_DAYS} days.")
 
 if __name__ == "__main__":
     main()

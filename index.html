@@ -46,7 +46,7 @@
   </div>
   <div class="meta">
     Sources: LinkedIn &bull; Bayt &bull; NaukriGulf &bull; Glassdoor<br>
-    <span id="lastUpdated">Loading...</span>
+    <span id="lastUpdated">Loading...</span> · last 7 days
   </div>
 </header>
 
@@ -93,11 +93,24 @@
 <script>
 let allJobs = [];
 
+function postedWithin7Days(postedDate) {
+  if (!postedDate) return false;
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Riyadh', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  const cutoff = new Date(today + 'T00:00:00+03:00');
+  cutoff.setDate(cutoff.getDate() - 7);
+  const cutoffYmd = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Riyadh', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(cutoff);
+  return postedDate.slice(0, 10) >= cutoffYmd;
+}
+
 async function loadJobs() {
   try {
     const res = await fetch('data/items.json?_=' + Date.now());
     const data = await res.json();
-    allJobs = data.jobs || [];
+    allJobs = (data.jobs || []).filter(j => postedWithin7Days(j.postedDate));
     document.getElementById('lastUpdated').textContent = 'Last updated: ' + new Date(data.lastUpdated).toLocaleString('en-SA', {timeZone:'Asia/Riyadh', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'}) + ' AST';
     renderTable(allJobs);
   } catch(e) {
