@@ -3,95 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owais Job Tracker — Saudi Arabia</title>
+<title>Owais — Open roles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
+  :root {
+    --ink: #1a1612;
+    --muted: #6b635a;
+    --line: #e6dfd4;
+    --paper: #f7f3ec;
+    --card: #fffdf8;
+    --accent: #0f6e5c;
+    --accent-soft: #e4f4ef;
+    --danger: #9a3412;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; font-size: 14px; color: #111; background: #f9f9f9; }
-  header { background: #1a1a2e; color: #fff; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-  header h1 { font-size: 18px; font-weight: 600; }
-  header .meta { font-size: 12px; color: #aaa; }
-  .cities { font-size: 12px; color: #9cf; }
-  .toolbar { padding: 12px 24px; background: #fff; border-bottom: 1px solid #e5e5e5; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .toolbar input { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; width: 220px; }
-  .toolbar select { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
-  button { padding: 6px 14px; background: #1a1a2e; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-  button:hover { background: #2d2d4e; }
-  .count { font-size: 12px; color: #666; margin-left: auto; }
+  html, body { min-height: 100%; }
+  body {
+    font-family: Outfit, system-ui, sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.45;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 36px 22px 80px; }
+  header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 28px; }
+  .kicker { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-top: 6px;
+    line-height: 1.1;
+  }
+  .meta { text-align: right; font-size: 13px; color: var(--muted); }
+  .meta strong { color: var(--ink); font-weight: 500; }
+  .cities { margin-top: 8px; color: var(--accent); font-weight: 500; font-size: 13px; }
+
+  .toolbar {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 12px; margin-bottom: 18px;
+  }
+  .tabs { display: flex; background: var(--paper); border-radius: 12px; padding: 3px; }
+  .tab {
+    border: 0; background: transparent; color: var(--muted);
+    padding: 8px 14px; border-radius: 10px; cursor: pointer; font: inherit; font-weight: 500; font-size: 13px;
+  }
+  .tab.active { background: var(--ink); color: #fff; }
+  input, select {
+    font: inherit; font-size: 14px; color: var(--ink);
+    border: 1px solid var(--line); background: #fff; border-radius: 10px;
+    padding: 9px 12px; outline: none;
+  }
+  input { min-width: 220px; flex: 1; }
+  input:focus, select:focus { border-color: var(--accent); }
+  .btn {
+    font: inherit; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--line); background: #fff; color: var(--ink);
+    padding: 9px 14px; border-radius: 10px; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--ink); }
+  .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+  .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
   table { width: 100%; border-collapse: collapse; }
-  thead { background: #f0f0f0; }
-  th { padding: 9px 12px; text-align: left; font-size: 12px; font-weight: 600; color: #444; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid #ddd; white-space: nowrap; }
-  td { padding: 9px 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
-  tr:hover td { background: #fafafa; }
-  .platform-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-  .pill-linkedin { background: #e8f0fe; color: #1a56db; }
-  .pill-bayt { background: #fce8d5; color: #b45309; }
-  .pill-naukrigulf { background: #e8fce8; color: #166534; }
-  .pill-glassdoor { background: #fef3c7; color: #92400e; }
-  .pill-indeed { background: #fde8e8; color: #991b1b; }
-  .city-pill { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 11px; background: #f3f4f6; color: #374151; }
-  .apply-link { color: #1a56db; text-decoration: none; font-weight: 500; }
+  th {
+    text-align: left; font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 14px 16px; border-bottom: 1px solid var(--line); background: #faf7f1;
+    white-space: nowrap;
+  }
+  td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover td { background: #faf6ee; }
+  .title { font-weight: 600; }
+  .company { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 500;
+    background: var(--paper); color: var(--ink); border: 1px solid var(--line);
+  }
+  .pill-linkedin { background: #eef3ff; border-color: #d7e2fb; color: #1d4ed8; }
+  .pill-bayt { background: #fff4e8; border-color: #f3ddc2; color: #9a3412; }
+  .pill-naukrigulf { background: var(--accent-soft); border-color: #cfe8df; color: #0f6e5c; }
+  .apply-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; }
   .apply-link:hover { text-decoration: underline; }
-  #tableWrapper { overflow-x: auto; }
-  .no-jobs { text-align: center; padding: 40px; color: #888; }
-  .loading { text-align: center; padding: 40px; color: #888; }
+
+  .tick {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid var(--line); background: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--muted); transition: 0.15s ease;
+  }
+  .tick:hover, .tick:focus-visible {
+    border-color: var(--accent); color: var(--accent); background: var(--accent-soft); outline: none;
+  }
+  .tick.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tick svg { width: 16px; height: 16px; }
+
+  .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
+  .empty h2 { font-family: Fraunces, serif; font-size: 24px; color: var(--ink); font-weight: 500; margin-bottom: 8px; }
+  .loading { text-align: center; padding: 56px; color: var(--muted); }
+  .actions { display: flex; gap: 10px; align-items: center; justify-content: flex-end; }
+  @media (max-width: 720px) {
+    h1 { font-size: 30px; }
+    .meta { text-align: left; }
+    .count { margin-left: 0; width: 100%; }
+    th:nth-child(4), td:nth-child(4) { display: none; }
+  }
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="kicker">Saudi Arabia · last 7 days</div>
+      <h1>Open roles</h1>
+      <div class="cities">Riyadh · Jeddah · Dammam · Al Khobar</div>
+    </div>
+    <div class="meta">
+      LinkedIn · Bayt · NaukriGulf<br>
+      <strong id="lastUpdated">Loading…</strong>
+    </div>
+  </header>
 
-<header>
-  <div>
-    <h1>Owais Job Tracker</h1>
-    <div class="cities">&#128205; Riyadh &nbsp;|&nbsp; Jeddah &nbsp;|&nbsp; Dammam &nbsp;|&nbsp; Al Khobar</div>
+  <div class="toolbar">
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tabOpen" type="button" onclick="setView('open')">Open</button>
+      <button class="tab" id="tabApplied" type="button" onclick="setView('applied')">Applied <span id="appliedCount">0</span></button>
+    </div>
+    <input type="search" id="search" placeholder="Search title or company" oninput="filterTable()">
+    <select id="cityFilter" onchange="filterTable()">
+      <option value="">All cities</option>
+      <option value="Riyadh">Riyadh</option>
+      <option value="Jeddah">Jeddah</option>
+      <option value="Dammam">Dammam</option>
+      <option value="Al Khobar">Al Khobar</option>
+    </select>
+    <select id="platformFilter" onchange="filterTable()">
+      <option value="">All sources</option>
+      <option value="LinkedIn">LinkedIn</option>
+      <option value="Bayt">Bayt</option>
+      <option value="NaukriGulf">NaukriGulf</option>
+      <option value="Glassdoor">Glassdoor</option>
+      <option value="Indeed">Indeed</option>
+    </select>
+    <button class="btn" type="button" onclick="downloadExcel()">Export</button>
+    <span class="count" id="count"></span>
   </div>
-  <div class="meta">
-    Sources: LinkedIn &bull; Bayt &bull; NaukriGulf &bull; Glassdoor<br>
-    <span id="lastUpdated">Loading...</span> · last 7 days
+
+  <div class="board" id="tableWrapper">
+    <div class="loading" id="loadingMsg">Loading roles…</div>
+    <table id="jobTable" style="display:none">
+      <thead>
+        <tr>
+          <th style="width:48px"></th>
+          <th>Role</th>
+          <th>City</th>
+          <th>Source</th>
+          <th>Posted</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="jobBody"></tbody>
+    </table>
+    <div class="empty" id="noJobs" style="display:none">
+      <h2 id="emptyTitle">You’re caught up</h2>
+      <p id="emptyBody">No open roles match this filter.</p>
+    </div>
   </div>
-</header>
-
-<div class="toolbar">
-  <input type="text" id="search" placeholder="Search title, company..." oninput="filterTable()">
-  <select id="cityFilter" onchange="filterTable()">
-    <option value="">All Cities</option>
-    <option value="Riyadh">Riyadh</option>
-    <option value="Jeddah">Jeddah</option>
-    <option value="Dammam">Dammam</option>
-    <option value="Al Khobar">Al Khobar</option>
-  </select>
-  <select id="platformFilter" onchange="filterTable()">
-    <option value="">All Platforms</option>
-    <option value="LinkedIn">LinkedIn</option>
-    <option value="Bayt">Bayt</option>
-    <option value="NaukriGulf">NaukriGulf</option>
-    <option value="Glassdoor">Glassdoor</option>
-    <option value="Indeed">Indeed</option>
-  </select>
-  <button onclick="downloadExcel()">&#8595; Download Excel</button>
-  <span class="count" id="count"></span>
-</div>
-
-<div id="tableWrapper">
-  <div class="loading" id="loadingMsg">Loading jobs...</div>
-  <table id="jobTable" style="display:none">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>Platform</th>
-        <th>Posted</th>
-        <th>Apply</th>
-      </tr>
-    </thead>
-    <tbody id="jobBody"></tbody>
-  </table>
-  <div class="no-jobs" id="noJobs" style="display:none">No jobs match your filter.</div>
 </div>
 
 <script>
+const STORE_KEY = 'owais-applied-ids';
 let allJobs = [];
+let view = 'open';
+let applied = new Set();
+
+const tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7.5"/></svg>';
+
+function loadApplied() {
+  try { return new Set(JSON.parse(localStorage.getItem(STORE_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveApplied() {
+  localStorage.setItem(STORE_KEY, JSON.stringify([...applied]));
+}
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
 function postedWithin7Days(postedDate) {
   if (!postedDate) return false;
@@ -107,81 +211,107 @@ function postedWithin7Days(postedDate) {
 }
 
 async function loadJobs() {
+  applied = loadApplied();
   try {
     const res = await fetch('data/items.json?_=' + Date.now());
     const data = await res.json();
     allJobs = (data.jobs || []).filter(j => postedWithin7Days(j.postedDate));
-    document.getElementById('lastUpdated').textContent = 'Last updated: ' + new Date(data.lastUpdated).toLocaleString('en-SA', {timeZone:'Asia/Riyadh', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'}) + ' AST';
-    renderTable(allJobs);
-  } catch(e) {
-    document.getElementById('loadingMsg').textContent = 'Failed to load jobs. Try refreshing.';
+    document.getElementById('lastUpdated').textContent =
+      new Date(data.lastUpdated).toLocaleString('en-SA', {timeZone:'Asia/Riyadh', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}) + ' AST';
+    filterTable();
+  } catch (e) {
+    document.getElementById('loadingMsg').textContent = 'Could not load roles. Refresh the page.';
   }
 }
 
 function platformPill(p) {
   const cls = { LinkedIn:'pill-linkedin', Bayt:'pill-bayt', NaukriGulf:'pill-naukrigulf', Glassdoor:'pill-glassdoor', Indeed:'pill-indeed' };
-  return `<span class="platform-pill ${cls[p]||''}">${p}</span>`;
+  return `<span class="pill ${cls[p]||''}">${esc(p)}</span>`;
+}
+
+function visibleJobs() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const city = document.getElementById('cityFilter').value;
+  const platform = document.getElementById('platformFilter').value;
+  return allJobs.filter(j => {
+    const isApplied = applied.has(j.id);
+    if (view === 'open' && isApplied) return false;
+    if (view === 'applied' && !isApplied) return false;
+    const matchQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q);
+    const matchCity = !city || j.city === city;
+    const matchPlatform = !platform || j.platform === platform;
+    return matchQ && matchCity && matchPlatform;
+  });
+}
+
+function setView(next) {
+  view = next;
+  document.getElementById('tabOpen').classList.toggle('active', next === 'open');
+  document.getElementById('tabApplied').classList.toggle('active', next === 'applied');
+  filterTable();
+}
+
+function toggleApplied(id) {
+  if (applied.has(id)) applied.delete(id);
+  else applied.add(id);
+  saveApplied();
+  filterTable();
+}
+
+function filterTable() {
+  renderTable(visibleJobs());
 }
 
 function renderTable(jobs) {
   document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('appliedCount').textContent = String([...applied].filter(id => allJobs.some(j => j.id === id)).length);
   const tbody = document.getElementById('jobBody');
   if (!jobs.length) {
     document.getElementById('jobTable').style.display = 'none';
     document.getElementById('noJobs').style.display = 'block';
-    document.getElementById('count').textContent = '0 jobs';
+    document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : 'You’re caught up';
+    document.getElementById('emptyBody').textContent = view === 'applied'
+      ? 'Tick a role after you apply and it will land here.'
+      : 'No open roles match this filter.';
+    document.getElementById('count').textContent = '';
     return;
   }
   document.getElementById('noJobs').style.display = 'none';
   document.getElementById('jobTable').style.display = 'table';
-  document.getElementById('count').textContent = jobs.length + ' job' + (jobs.length !== 1 ? 's' : '');
-  tbody.innerHTML = jobs.map((j, i) => `
-    <tr>
-      <td>${i + 1}</td>
-      <td><strong>${j.title}</strong></td>
-      <td>${j.company}</td>
-      <td><span class="city-pill">${j.city}</span></td>
+  document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : ' open');
+  tbody.innerHTML = jobs.map(j => {
+    const done = applied.has(j.id);
+    const label = done ? 'Undo applied' : 'Mark as applied';
+    return `<tr>
+      <td>
+        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
+      </td>
+      <td>
+        <div class="title">${esc(j.title)}</div>
+        <div class="company">${esc(j.company)}</div>
+      </td>
+      <td><span class="pill">${esc(j.city)}</span></td>
       <td>${platformPill(j.platform)}</td>
-      <td>${j.postedDate}</td>
-      <td><a class="apply-link" href="${j.applyUrl}" target="_blank" rel="noopener">Apply &#8599;</a></td>
-    </tr>
-  `).join('');
-}
-
-function filterTable() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const city = document.getElementById('cityFilter').value;
-  const platform = document.getElementById('platformFilter').value;
-  const filtered = allJobs.filter(j => {
-    const matchQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q);
-    const matchCity = !city || j.city === city;
-    const matchPlatform = !platform || j.platform === platform;
-    return matchQ && matchCity && matchPlatform;
-  });
-  renderTable(filtered);
+      <td>${esc(j.postedDate)}</td>
+      <td class="actions">
+        <a class="apply-link" href="${esc(j.applyUrl)}" target="_blank" rel="noopener">Apply</a>
+      </td>
+    </tr>`;
+  }).join('');
 }
 
 function downloadExcel() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const city = document.getElementById('cityFilter').value;
-  const platform = document.getElementById('platformFilter').value;
-  const jobs = allJobs.filter(j => {
-    const matchQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q);
-    const matchCity = !city || j.city === city;
-    const matchPlatform = !platform || j.platform === platform;
-    return matchQ && matchCity && matchPlatform;
-  });
-  const rows = [['#', 'Title', 'Company', 'City', 'Platform', 'Posted Date', 'Apply URL']];
-  jobs.forEach((j, i) => rows.push([i+1, j.title, j.company, j.city, j.platform, j.postedDate, j.applyUrl]));
+  const jobs = visibleJobs();
+  const rows = [['Title', 'Company', 'City', 'Platform', 'Posted Date', 'Apply URL']];
+  jobs.forEach(j => rows.push([j.title, j.company, j.city, j.platform, j.postedDate, j.applyUrl]));
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:4},{wch:40},{wch:30},{wch:14},{wch:12},{wch:12},{wch:60}];
-  XLSX.utils.book_append_sheet(wb, ws, 'Jobs');
+  ws['!cols'] = [{wch:42},{wch:30},{wch:14},{wch:12},{wch:12},{wch:60}];
+  XLSX.utils.book_append_sheet(wb, ws, view === 'applied' ? 'Applied' : 'Open');
   XLSX.writeFile(wb, 'owais_jobs_' + new Date().toISOString().slice(0,10) + '.xlsx');
 }
 
 loadJobs();
 </script>
-
 </body>
 </html>
