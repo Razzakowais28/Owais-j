@@ -70,7 +70,7 @@
   .count { margin-left: auto; font-size: 13px; color: var(--muted); }
 
   .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 760px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 760px; }
   th {
     text-align: left; font-size: 11px; font-weight: 600; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -122,7 +122,7 @@
   .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
   .empty h2 { font-family: Fraunces, serif; font-size: 24px; color: var(--ink); font-weight: 500; margin-bottom: 8px; }
   .loading { text-align: center; padding: 56px; color: var(--muted); }
-  .actions { display: flex; gap: 10px; align-items: center; justify-content: flex-end; }
+  .actions { text-align: right; white-space: nowrap; }
   @media (max-width: 720px) {
     h1 { font-size: 30px; }
     .meta { text-align: left; }
