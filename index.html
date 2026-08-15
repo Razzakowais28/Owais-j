@@ -99,6 +99,8 @@
   .pill-linkedin { background: #eef3ff; border-color: #d7e2fb; color: #1d4ed8; }
   .pill-bayt { background: #fff4e8; border-color: #f3ddc2; color: #9a3412; }
   .pill-naukrigulf { background: var(--accent-soft); border-color: #cfe8df; color: #0f6e5c; }
+  .pill-indeed { background: #fde8e8; border-color: #f3c7c7; color: #991b1b; }
+  .pill-glassdoor { background: #fff6dc; border-color: #ead9a8; color: #92400e; }
   .apply-link {
     display: inline-flex; align-items: center;
     color: #fff; background: var(--accent); text-decoration: none;
@@ -183,6 +185,7 @@
           <th>City</th>
           <th>Source</th>
           <th>Posted</th>
+          <th>Age</th>
           <th></th>
         </tr>
       </thead>
@@ -212,6 +215,17 @@ function saveApplied() {
 }
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function ageLabel(iso) {
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return '—';
+  const posted = Date.parse(`${m[1]}-${m[2]}-${m[3]}T12:00:00+03:00`);
+  if (Number.isNaN(posted)) return '—';
+  const days = Math.floor((Date.now() - posted) / 86400000);
+  if (days <= 0) return 'Today';
+  if (days === 1) return '1 day ago';
+  return `${days} days ago`;
 }
 
 function formatDate(iso) {
@@ -342,6 +356,7 @@ function renderTable(jobs) {
       <td><span class="pill">${esc(j.city)}</span></td>
       <td>${platformPill(j.platform)}</td>
       <td class="posted">${esc(formatDate(j.postedDate))}</td>
+      <td class="posted">${esc(ageLabel(j.postedDate))}</td>
       <td class="actions">
         <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
       </td>
@@ -351,8 +366,8 @@ function renderTable(jobs) {
 
 function downloadExcel() {
   const jobs = visibleJobs();
-  const rows = [['Title', 'Company', 'City', 'Platform', 'Posted Date', 'Apply URL']];
-  jobs.forEach(j => rows.push([j.title, j.company, j.city, j.platform, j.postedDate, j.applyUrl]));
+  const rows = [['Title', 'Company', 'City', 'Platform', 'Posted Date', 'Age', 'Apply URL']];
+  jobs.forEach(j => rows.push([j.title, j.company, j.city, j.platform, j.postedDate, ageLabel(j.postedDate), j.applyUrl]));
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(rows);
   ws['!cols'] = [{wch:42},{wch:30},{wch:14},{wch:12},{wch:12},{wch:60}];

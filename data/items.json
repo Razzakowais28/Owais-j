@@ -1,6 +1,28 @@
 {
-  "lastUpdated": "2026-08-15T21:37:00Z",
+  "lastUpdated": "2026-08-15T22:15:00Z",
   "jobs": [
+    {
+      "id": "penny-fullstack-riyadh",
+      "title": "Full Stack Developer",
+      "company": "Penny Software",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "Indeed",
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a",
+      "jobUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a"
+    },
+    {
+      "id": "dreamforge-webdev-riyadh",
+      "title": "Web Developer",
+      "company": "DREAM FORGE TRADING CO",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "Bayt",
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://www.bayt.com/en/saudi-arabia/jobs/web-developer-5475707/",
+      "jobUrl": "https://www.bayt.com/en/saudi-arabia/jobs/web-developer-5475707/"
+    },
     {
       "id": "innovationteam-ai-riyadh",
       "title": "AI Engineer",
