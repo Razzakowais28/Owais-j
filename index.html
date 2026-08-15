@@ -308,6 +308,7 @@ function renderTable(jobs) {
   tbody.innerHTML = jobs.map(j => {
     const done = applied.has(j.id);
     const label = done ? 'Undo applied' : 'Mark as applied';
+    const applyText = done ? 'Apply again' : 'Apply';
     return `<tr>
       <td class="sticky-tick">
         <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
@@ -320,9 +321,7 @@ function renderTable(jobs) {
       <td>${platformPill(j.platform)}</td>
       <td class="posted">${esc(formatDate(j.postedDate))}</td>
       <td class="actions">
-        ${done
-          ? '<span class="applied-label">Applied</span>'
-          : `<a class="apply-link" href="${esc(j.applyUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">Apply</a>`}
+        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
       </td>
     </tr>`;
   }).join('');
