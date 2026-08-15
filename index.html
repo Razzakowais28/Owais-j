@@ -69,8 +69,8 @@
   .btn:hover { border-color: var(--ink); }
   .count { margin-left: auto; font-size: 13px; color: var(--muted); }
 
-  .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
-  table { width: 100%; border-collapse: collapse; }
+  .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 760px; }
   th {
     text-align: left; font-size: 11px; font-weight: 600; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -80,6 +80,13 @@
   td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
   tbody tr:last-child td { border-bottom: 0; }
   tbody tr:hover td { background: #faf6ee; }
+  th.sticky-tick, td.sticky-tick {
+    position: sticky; left: 0; z-index: 1; width: 72px;
+    background: #faf7f1;
+  }
+  td.sticky-tick { background: var(--card); }
+  tbody tr:hover td.sticky-tick { background: #faf6ee; }
+  .posted { font-variant-numeric: tabular-nums; white-space: nowrap; }
   .title { font-weight: 600; }
   .company { color: var(--muted); font-size: 13px; margin-top: 2px; }
   .pill {
@@ -90,8 +97,12 @@
   .pill-linkedin { background: #eef3ff; border-color: #d7e2fb; color: #1d4ed8; }
   .pill-bayt { background: #fff4e8; border-color: #f3ddc2; color: #9a3412; }
   .pill-naukrigulf { background: var(--accent-soft); border-color: #cfe8df; color: #0f6e5c; }
-  .apply-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; }
-  .apply-link:hover { text-decoration: underline; }
+  .apply-link {
+    display: inline-flex; align-items: center;
+    color: #fff; background: var(--accent); text-decoration: none;
+    font-weight: 600; font-size: 13px; padding: 7px 12px; border-radius: 10px;
+  }
+  .apply-link:hover { filter: brightness(0.95); text-decoration: none; }
 
   .tick {
     width: 32px; height: 32px; border-radius: 50%;
@@ -161,7 +172,7 @@
     <table id="jobTable" style="display:none">
       <thead>
         <tr>
-          <th style="width:48px"></th>
+          <th class="sticky-tick">Mark</th>
           <th>Role</th>
           <th>City</th>
           <th>Source</th>
@@ -195,6 +206,12 @@ function saveApplied() {
 }
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function formatDate(iso) {
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return iso || '';
+  return `${m[3]}-${m[2]}-${m[1]}`;
 }
 
 function postedWithin7Days(postedDate) {
@@ -283,7 +300,7 @@ function renderTable(jobs) {
     const done = applied.has(j.id);
     const label = done ? 'Undo applied' : 'Mark as applied';
     return `<tr>
-      <td>
+      <td class="sticky-tick">
         <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
       </td>
       <td>
@@ -292,7 +309,7 @@ function renderTable(jobs) {
       </td>
       <td><span class="pill">${esc(j.city)}</span></td>
       <td>${platformPill(j.platform)}</td>
-      <td>${esc(j.postedDate)}</td>
+      <td class="posted">${esc(formatDate(j.postedDate))}</td>
       <td class="actions">
         <a class="apply-link" href="${esc(j.applyUrl)}" target="_blank" rel="noopener">Apply</a>
       </td>
