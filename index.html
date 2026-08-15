@@ -103,6 +103,9 @@
     font-weight: 600; font-size: 13px; padding: 7px 12px; border-radius: 10px;
   }
   .apply-link:hover { filter: brightness(0.95); text-decoration: none; }
+  .applied-label {
+    font-size: 13px; font-weight: 600; color: var(--muted);
+  }
 
   .tick {
     width: 32px; height: 32px; border-radius: 50%;
@@ -268,6 +271,12 @@ function setView(next) {
   filterTable();
 }
 
+function markApplied(id) {
+  applied.add(id);
+  saveApplied();
+  filterTable();
+}
+
 function toggleApplied(id) {
   if (applied.has(id)) applied.delete(id);
   else applied.add(id);
@@ -288,7 +297,7 @@ function renderTable(jobs) {
     document.getElementById('noJobs').style.display = 'block';
     document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : 'You’re caught up';
     document.getElementById('emptyBody').textContent = view === 'applied'
-      ? 'Tick a role after you apply and it will land here.'
+      ? 'Roles you applied to are listed here. Tick again to put one back on Open.'
       : 'No open roles match this filter.';
     document.getElementById('count').textContent = '';
     return;
@@ -311,7 +320,9 @@ function renderTable(jobs) {
       <td>${platformPill(j.platform)}</td>
       <td class="posted">${esc(formatDate(j.postedDate))}</td>
       <td class="actions">
-        <a class="apply-link" href="${esc(j.applyUrl)}" target="_blank" rel="noopener">Apply</a>
+        ${done
+          ? '<span class="applied-label">Applied</span>'
+          : `<a class="apply-link" href="${esc(j.applyUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">Apply</a>`}
       </td>
     </tr>`;
   }).join('');
