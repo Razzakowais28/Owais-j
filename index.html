@@ -95,7 +95,7 @@ let allJobs = [];
 
 async function loadJobs() {
   try {
-    const res = await fetch('data/jobs.json?_=' + Date.now());
+    const res = await fetch('data/items.json?_=' + Date.now());
     const data = await res.json();
     allJobs = data.jobs || [];
     document.getElementById('lastUpdated').textContent = 'Last updated: ' + new Date(data.lastUpdated).toLocaleString('en-SA', {timeZone:'Asia/Riyadh', day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'}) + ' AST';

@@ -1,4 +1,4 @@
-name: Refresh Jobs
+name: Sync
 
 on:
   schedule:
@@ -21,19 +21,19 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install requests
-      - name: Run scraper
+      - name: Run update
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: python scripts/scraper.py
-      - name: Commit and push updated jobs
+      - name: Commit and push
         run: |
-          git config user.name "Owais Job Bot"
-          git config user.email "bot@owais-jobs.local"
-          git add data/jobs.json data/seen.json
+          git config user.name "sync-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/items.json data/seen.json
           if git diff --staged --quiet; then
-            echo "No new jobs found — nothing to commit."
+            echo "No changes — nothing to commit."
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "Refresh jobs – ${TIMESTAMP}"
+            git commit -m "Update data – ${TIMESTAMP}"
             git push
           fi

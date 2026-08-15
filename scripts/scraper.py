@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 """
-Owais Job Tracker – Auto-scraper
-Runs via GitHub Actions at 8 AM and 6 PM AST (5 AM and 3 PM UTC).
-Calls Apify actors for LinkedIn, Bayt, NaukriGulf.
-Filters to Riyadh, Jeddah, Dammam, Al Khobar only.
-Skips jobs already in seen.json.
-Updates data/jobs.json and data/seen.json.
+Data refresh script. Runs on a schedule via GitHub Actions.
 """
 
 import os, json, time, hashlib, requests
@@ -24,7 +19,7 @@ KEYWORDS = [
 ]
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
-JOBS_FILE = os.path.join(DATA_DIR, "jobs.json")
+JOBS_FILE = os.path.join(DATA_DIR, "items.json")
 SEEN_FILE = os.path.join(DATA_DIR, "seen.json")
 
 
@@ -244,7 +239,7 @@ def main():
     ))
     save_json(SEEN_FILE, seen_data)
 
-    print(f"Done. Added {len(new_jobs)} new jobs. jobs.json updated.")
+    print(f"Done. Added {len(new_jobs)} new items. items.json updated.")
 
 if __name__ == "__main__":
     main()
