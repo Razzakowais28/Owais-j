@@ -23,10 +23,10 @@ jobs:
         run: pip install requests
       - name: Verify Apify credentials
         env:
-          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN || secrets.APIFY_API_TOKEN || secrets.APIFY_API_KEY || vars.APIFY_TOKEN }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN || secrets.AMIPFY || secrets.APIFY_API_TOKEN || secrets.APIFY_API_KEY || vars.APIFY_TOKEN }}
         run: |
           if [ -z "$APIFY_TOKEN" ]; then
-            echo "::error::No Apify token found. Add a repository secret named APIFY_TOKEN under Settings → Secrets and variables → Actions → Secrets (not Variables)."
+            echo "::error::No Apify token found. Add a repository secret named APIFY_TOKEN (or AMIPFY) under Settings → Secrets and variables → Actions → Secrets (not Variables)."
             exit 1
           fi
           echo "Apify token is configured (${#APIFY_TOKEN} characters)."
@@ -34,7 +34,7 @@ jobs:
         id: update
         continue-on-error: true
         env:
-          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN || secrets.APIFY_API_TOKEN || secrets.APIFY_API_KEY || vars.APIFY_TOKEN }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN || secrets.AMIPFY || secrets.APIFY_API_TOKEN || secrets.APIFY_API_KEY || vars.APIFY_TOKEN }}
         run: python scripts/scraper.py
       - name: Commit and push
         run: |
