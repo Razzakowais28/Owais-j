@@ -262,7 +262,9 @@ def main():
 
     if not APIFY_TOKEN:
         print("ERROR: APIFY_TOKEN is not set.")
-        print("Add it in GitHub → Settings → Secrets and variables → Actions → New repository secret.")
+        print("Add a repository secret named APIFY_TOKEN at:")
+        print("  GitHub repo → Settings → Secrets and variables → Actions → Secrets tab")
+        print("Use your personal API token from https://console.apify.com/account/integrations")
         raise SystemExit(1)
 
     new_jobs, seen_ids = scrape_all(seen_data, existing_ids)
@@ -279,7 +281,9 @@ def main():
         merged.append(j)
 
     if merged == jobs_data.get("jobs", []) and not new_jobs:
-        print("No new jobs and no stale rows to drop.")
+        jobs_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        save_json(JOBS_FILE, jobs_data)
+        print("No new jobs and no stale rows to drop. Updated lastUpdated timestamp.")
         return
 
     jobs_data["jobs"] = merged
