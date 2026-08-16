@@ -28,7 +28,7 @@
     background: var(--paper);
     line-height: 1.45;
   }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 36px 22px 80px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 36px 22px 80px; padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 28px; }
   .kicker { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
   h1 {
@@ -40,14 +40,59 @@
     line-height: 1.1;
   }
   .meta { text-align: right; font-size: 13px; color: var(--muted); }
-  .meta strong { color: var(--ink); font-weight: 500; }
+  .meta strong { color: var(--ink); font-weight: 500; display: block; margin-top: 4px; }
   .cities { margin-top: 8px; color: var(--accent); font-weight: 500; font-size: 13px; }
+
+  .sources {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .sources h2 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 20px;
+  }
+  .source-item strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .source-item a { color: var(--accent); text-decoration: none; word-break: break-word; }
+  .source-item a:hover { text-decoration: underline; }
+  .source-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .source-pills span {
+    display: inline-flex;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
 
   .toolbar {
     display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
     background: var(--card); border: 1px solid var(--line); border-radius: 16px;
     padding: 12px; margin-bottom: 18px;
   }
+  .toolbar-row { display: contents; }
   .tabs { display: flex; background: var(--paper); border-radius: 12px; padding: 3px; }
   .tab {
     border: 0; background: transparent; color: var(--muted);
@@ -60,6 +105,7 @@
     padding: 9px 12px; outline: none; height: 40px;
   }
   input { min-width: 220px; flex: 1; }
+  select { min-width: 0; }
   input:focus, select:focus { border-color: var(--accent); }
   .btn {
     font-weight: 500;
@@ -67,12 +113,44 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding-inline: 14px;
   }
   .btn:hover { border-color: var(--ink); }
   .count { margin-left: auto; font-size: 13px; color: var(--muted); }
 
-  .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; }
+  .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 760px; }
+  .job-cards { display: none; }
+  .job-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .job-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .job-card-main { flex: 1; min-width: 0; }
+  .job-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .job-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .job-card-dates { font-size: 12px; color: var(--muted); }
+  .job-card .apply-link { width: 100%; justify-content: center; min-height: 44px; }
   th {
     text-align: left; font-size: 11px; font-weight: 600; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -112,10 +190,11 @@
   }
 
   .tick {
-    width: 32px; height: 32px; border-radius: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
     border: 1.5px solid var(--line); background: #fff;
     display: inline-flex; align-items: center; justify-content: center;
     cursor: pointer; color: var(--muted); transition: 0.15s ease;
+    flex-shrink: 0;
   }
   .tick:hover, .tick:focus-visible {
     border-color: var(--accent); color: var(--accent); background: var(--accent-soft); outline: none;
@@ -127,10 +206,39 @@
   .empty h2 { font-family: Fraunces, serif; font-size: 24px; color: var(--ink); font-weight: 500; margin-bottom: 8px; }
   .loading { text-align: center; padding: 56px; color: var(--muted); }
   .actions { text-align: right; white-space: nowrap; }
+  @media (max-width: 768px) {
+    .wrap { padding: 20px 16px 40px; }
+    h1 { font-size: 28px; }
+    header { align-items: flex-start; margin-bottom: 20px; }
+    .meta { text-align: left; width: 100%; }
+    .sources { padding: 14px; }
+    .source-grid { grid-template-columns: 1fr; }
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+    }
+    .tabs { grid-column: 1 / -1; width: 100%; }
+    .tab { flex: 1; text-align: center; min-height: 44px; }
+    #search { grid-column: 1 / -1; width: 100%; min-width: 0; }
+    #cityFilter, #platformFilter { width: 100%; }
+    .btn { width: 100%; }
+    .count { grid-column: 1 / -1; width: 100%; text-align: center; margin-left: 0; }
+    .board {
+      overflow: visible;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+    #jobTable { display: none !important; }
+    .job-cards {
+      display: grid;
+      gap: 12px;
+    }
+    .empty, .loading { padding: 40px 12px; }
+  }
   @media (max-width: 720px) {
-    h1 { font-size: 30px; }
-    .meta { text-align: left; }
-    .count { margin-left: 0; width: 100%; }
     th:nth-child(4), td:nth-child(4) { display: none; }
   }
 </style>
@@ -144,10 +252,35 @@
       <div class="cities">Riyadh · Jeddah · Dammam · Al Khobar</div>
     </div>
     <div class="meta">
-      LinkedIn · Bayt · NaukriGulf<br>
+      Last updated<br>
       <strong id="lastUpdated">Loading…</strong>
     </div>
   </header>
+
+  <section class="sources" aria-label="Data sources">
+    <h2>Where this is fetched from</h2>
+    <div class="source-grid">
+      <div class="source-item">
+        <strong>Live data file</strong>
+        <a id="dataFileLink" href="data/items.json" target="_blank" rel="noopener">data/items.json</a>
+        <div>Loaded by this page on every visit.</div>
+      </div>
+      <div class="source-item">
+        <strong>Job boards scraped</strong>
+        <div class="source-pills" id="sourceBoards">
+          <span>LinkedIn</span>
+          <span>Bayt</span>
+          <span>NaukriGulf</span>
+        </div>
+        <div>Via Apify scrapers in <code>scripts/scraper.py</code>.</div>
+      </div>
+      <div class="source-item">
+        <strong>Auto refresh</strong>
+        <div>GitHub Actions · 8:00 AM & 6:00 PM AST</div>
+        <div id="sourceCounts">—</div>
+      </div>
+    </div>
+  </section>
 
   <div class="toolbar">
     <div class="tabs" role="tablist">
@@ -177,6 +310,7 @@
 
   <div class="board" id="tableWrapper">
     <div class="loading" id="loadingMsg">Loading roles…</div>
+    <div class="job-cards" id="jobCards"></div>
     <table id="jobTable" style="display:none">
       <thead>
         <tr>
@@ -247,12 +381,70 @@ function postedWithin7Days(postedDate) {
   return postedDate.slice(0, 10) >= cutoffYmd;
 }
 
+function updateSourceInfo(jobs) {
+  const counts = {};
+  jobs.forEach(j => { counts[j.platform] = (counts[j.platform] || 0) + 1; });
+  const parts = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([name, n]) => `${name}: ${n}`);
+  document.getElementById('sourceCounts').textContent = parts.length
+    ? `${jobs.length} roles live · ${parts.join(' · ')}`
+    : 'No roles in the feed right now.';
+  const boards = document.getElementById('sourceBoards');
+  boards.innerHTML = ['LinkedIn', 'Bayt', 'NaukriGulf', 'Indeed', 'Glassdoor']
+    .filter(p => counts[p])
+    .map(p => `<span>${esc(p)} (${counts[p]})</span>`)
+    .join('') || '<span>LinkedIn</span><span>Bayt</span><span>NaukriGulf</span>';
+}
+
+function jobRowHtml(j) {
+  const done = applied.has(j.id);
+  const label = done ? 'Undo applied' : 'Mark as applied';
+  const applyText = done ? 'Apply again' : 'Apply';
+  return {
+    table: `<tr>
+      <td class="sticky-tick">
+        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
+      </td>
+      <td>
+        <div class="title">${esc(j.title)}</div>
+        <div class="company">${esc(j.company)}</div>
+      </td>
+      <td><span class="pill">${esc(j.city)}</span></td>
+      <td>${platformPill(j.platform)}</td>
+      <td class="posted">${esc(formatDate(j.postedDate))}</td>
+      <td class="posted">${esc(ageLabel(j.postedDate))}</td>
+      <td class="actions">
+        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
+      </td>
+    </tr>`,
+    card: `<article class="job-card">
+      <div class="job-card-head">
+        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
+        <div class="job-card-main">
+          <div class="title">${esc(j.title)}</div>
+          <div class="company">${esc(j.company)}</div>
+        </div>
+      </div>
+      <div class="job-card-meta">
+        <span class="pill">${esc(j.city)}</span>
+        ${platformPill(j.platform)}
+      </div>
+      <div class="job-card-foot">
+        <div class="job-card-dates">Posted ${esc(formatDate(j.postedDate))} · ${esc(ageLabel(j.postedDate))}</div>
+        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
+      </div>
+    </article>`
+  };
+}
+
 async function loadJobs() {
   applied = loadApplied();
   try {
     const res = await fetch('data/items.json?_=' + Date.now());
     const data = await res.json();
     allJobs = (data.jobs || []).filter(j => postedWithin7Days(j.postedDate));
+    updateSourceInfo(allJobs);
     const updated = new Date(data.lastUpdated);
     const parts = new Intl.DateTimeFormat('en-GB', {
       timeZone: 'Asia/Riyadh',
@@ -328,8 +520,10 @@ function renderTable(jobs) {
   document.getElementById('loadingMsg').style.display = 'none';
   document.getElementById('appliedCount').textContent = String([...applied].filter(id => allJobs.some(j => j.id === id)).length);
   const tbody = document.getElementById('jobBody');
+  const cards = document.getElementById('jobCards');
   if (!jobs.length) {
     document.getElementById('jobTable').style.display = 'none';
+    cards.innerHTML = '';
     document.getElementById('noJobs').style.display = 'block';
     document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : 'You’re caught up';
     document.getElementById('emptyBody').textContent = view === 'applied'
@@ -341,27 +535,9 @@ function renderTable(jobs) {
   document.getElementById('noJobs').style.display = 'none';
   document.getElementById('jobTable').style.display = 'table';
   document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : ' open');
-  tbody.innerHTML = jobs.map(j => {
-    const done = applied.has(j.id);
-    const label = done ? 'Undo applied' : 'Mark as applied';
-    const applyText = done ? 'Apply again' : 'Apply';
-    return `<tr>
-      <td class="sticky-tick">
-        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
-      </td>
-      <td>
-        <div class="title">${esc(j.title)}</div>
-        <div class="company">${esc(j.company)}</div>
-      </td>
-      <td><span class="pill">${esc(j.city)}</span></td>
-      <td>${platformPill(j.platform)}</td>
-      <td class="posted">${esc(formatDate(j.postedDate))}</td>
-      <td class="posted">${esc(ageLabel(j.postedDate))}</td>
-      <td class="actions">
-        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
-      </td>
-    </tr>`;
-  }).join('');
+  const rows = jobs.map(jobRowHtml);
+  tbody.innerHTML = rows.map(r => r.table).join('');
+  cards.innerHTML = rows.map(r => r.card).join('');
 }
 
 function downloadExcel() {
