@@ -3,7 +3,7 @@
 Data refresh script. Runs on a schedule via GitHub Actions.
 """
 
-import os, json, time, hashlib, requests
+import os, json, time, hashlib, re, requests
 from datetime import datetime, timedelta, timezone
 
 APIFY_TOKEN = os.environ.get("APIFY_TOKEN", "")
@@ -19,9 +19,26 @@ KEYWORDS = [
 ]
 
 MAX_AGE_DAYS = 7
+MAX_JOBS = 10
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 JOBS_FILE = os.path.join(DATA_DIR, "items.json")
 SEEN_FILE = os.path.join(DATA_DIR, "seen.json")
+
+DEV_TITLE = re.compile(
+    r"\b("
+    r"developer|software engineer|full[\s-]?stack|front[\s-]?end|back[\s-]?end|"
+    r"web developer|mobile developer|react|node\.?js|erp\s*developer|erpnext|"
+    r"programmer|\.net developer|java developer|python developer|android developer|"
+    r"ios developer|flutter developer|product engineer"
+    r")\b",
+    re.I,
+)
+SKIP_TITLE = re.compile(
+    r"\b(director|manager|head of|lead recruiter|support engineer|network engineer|"
+    r"cyber\s*security|security engineer|sales|marketing|hr |human resources|"
+    r"accountant|finance|legal)\b",
+    re.I,
+)
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -54,6 +71,17 @@ def posted_within(posted, days=MAX_AGE_DAYS):
         return False
     cutoff = datetime.now(timezone.utc).date() - timedelta(days=days)
     return d >= cutoff
+
+def is_developer_role(title):
+    t = title or ""
+    if SKIP_TITLE.search(t):
+        return False
+    return bool(DEV_TITLE.search(t))
+
+def keep_top_developer_jobs(jobs, limit=MAX_JOBS):
+    dev_jobs = [j for j in jobs if is_developer_role(j.get("title", ""))]
+    dev_jobs.sort(key=lambda j: j.get("postedDate", ""), reverse=True)
+    return dev_jobs[:limit]
 
 def run_actor(actor_slug, input_body, wait_secs=120):
     """Start an Apify actor run, wait for completion, return dataset items."""
@@ -236,6 +264,8 @@ def scrape_all(seen_data, existing_ids):
         jid = j["id"]
         if not j["title"] or not j["company"]:
             continue
+        if not is_developer_role(j["title"]):
+            continue
         if not posted_within(j.get("postedDate")):
             continue
         tc_key = f"{j['title'].strip()}|{j['company'].strip()}"
@@ -277,8 +307,12 @@ def main():
             continue
         if not posted_within(j.get("postedDate")):
             continue
+        if not is_developer_role(j.get("title", "")):
+            continue
         seen_merge.add(jid)
         merged.append(j)
+
+    merged = keep_top_developer_jobs(merged)
 
     if merged == jobs_data.get("jobs", []) and not new_jobs:
         jobs_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
