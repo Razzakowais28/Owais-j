@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-16T18:02:12Z",
+  "lastUpdated": "2026-08-16T18:11:00Z",
   "jobs": [
     {
       "id": "8cc58823d520",
@@ -46,6 +46,17 @@
       "jobUrl": "https://www.bayt.com/en/job/apply/index/5476552/"
     },
     {
+      "id": "061201d31294",
+      "title": "Product Developer - Saudi Arabia",
+      "company": "BMC Helix",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=27&pageNum=0&refId=wcp7VAxREH5TiQpwg7jDWA%3D%3D&trackingId=ZsWvHhLAZU3EMMdXaLhdgQ%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=27&pageNum=0&refId=wcp7VAxREH5TiQpwg7jDWA%3D%3D&trackingId=ZsWvHhLAZU3EMMdXaLhdgQ%3D%3D"
+    },
+    {
       "id": "13e980cdec0c",
       "title": "Senior IBM BAW / BPM Developer",
       "company": "KALSOFT",
@@ -90,26 +101,15 @@
       "jobUrl": "https://www.bayt.com/en/saudi-arabia/jobs/web-developer-5475707/"
     },
     {
-      "id": "60e1eccb69b4",
-      "title": "Product Developer- Saudi Arabia",
-      "company": "BMC Helix",
-      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "id": "3aa7098cc374",
+      "title": "Senior Software Engineer (Android)",
+      "company": "Delivery Hero SE",
+      "location": "Riyadh, Saudi Arabia",
       "city": "Riyadh",
-      "platform": "LinkedIn",
+      "platform": "Bayt",
       "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=13&pageNum=0&refId=cs1L01wC4yv20XgmJ6x%2BSA%3D%3D&trackingId=pgAs8Z35YTVAUExXprE6eg%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=13&pageNum=0&refId=cs1L01wC4yv20XgmJ6x%2BSA%3D%3D&trackingId=pgAs8Z35YTVAUExXprE6eg%3D%3D"
-    },
-    {
-      "id": "d77bba2d11c3",
-      "title": "Senior IBM BAW Developer",
-      "company": "Linnk Group",
-      "location": "Riyadh Region",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=18&pageNum=0&refId=KRdGKghedZsJciirVS4H0A%3D%3D&trackingId=z8Uhh0SFBfgWQe%2BdlBsUHw%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=18&pageNum=0&refId=KRdGKghedZsJciirVS4H0A%3D%3D&trackingId=z8Uhh0SFBfgWQe%2BdlBsUHw%3D%3D"
+      "applyUrl": "https://www.bayt.com/en/job/apply/index/75022339/",
+      "jobUrl": "https://www.bayt.com/en/job/apply/index/75022339/"
     }
   ]
 }
