@@ -122,7 +122,10 @@
 
   .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 760px; }
-  .job-cards { display: none; }
+  #jobTable { display: none; }
+  #jobTable.is-visible { display: table; }
+  .job-cards { display: none; gap: 12px; }
+  .job-cards.is-visible { display: grid; }
   .job-card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -183,6 +186,8 @@
     display: inline-flex; align-items: center;
     color: #fff; background: var(--accent); text-decoration: none;
     font-weight: 600; font-size: 13px; padding: 7px 12px; border-radius: 10px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .apply-link:hover { filter: brightness(0.95); text-decoration: none; }
   .applied-label {
@@ -195,6 +200,8 @@
     display: inline-flex; align-items: center; justify-content: center;
     cursor: pointer; color: var(--muted); transition: 0.15s ease;
     flex-shrink: 0;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .tick:hover, .tick:focus-visible {
     border-color: var(--accent); color: var(--accent); background: var(--accent-soft); outline: none;
@@ -206,8 +213,8 @@
   .empty h2 { font-family: Fraunces, serif; font-size: 24px; color: var(--ink); font-weight: 500; margin-bottom: 8px; }
   .loading { text-align: center; padding: 56px; color: var(--muted); }
   .actions { text-align: right; white-space: nowrap; }
-  @media (max-width: 768px) {
-    .wrap { padding: 20px 16px 40px; }
+  @media (max-width: 900px) {
+    .wrap { padding: 20px 16px 40px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
     h1 { font-size: 28px; }
     header { align-items: flex-start; margin-bottom: 20px; }
     .meta { text-align: left; width: 100%; }
@@ -219,7 +226,7 @@
       gap: 10px;
       padding: 12px;
     }
-    .tabs { grid-column: 1 / -1; width: 100%; }
+    .tabs { grid-column: 1 / -1; width: 100%; display: flex; }
     .tab { flex: 1; text-align: center; min-height: 44px; }
     #search { grid-column: 1 / -1; width: 100%; min-width: 0; }
     #cityFilter, #platformFilter { width: 100%; }
@@ -231,15 +238,20 @@
       border: 0;
       border-radius: 0;
     }
-    #jobTable { display: none !important; }
-    .job-cards {
-      display: grid;
-      gap: 12px;
-    }
+    #jobTable.is-visible { display: none !important; }
+    .job-cards.is-visible { display: grid !important; }
     .empty, .loading { padding: 40px 12px; }
   }
   @media (max-width: 720px) {
     th:nth-child(4), td:nth-child(4) { display: none; }
+  }
+  body.use-cards #jobTable.is-visible { display: none !important; }
+  body.use-cards .job-cards.is-visible { display: grid !important; }
+  body.use-cards .board {
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
   }
 </style>
 </head>
@@ -310,8 +322,8 @@
 
   <div class="board" id="tableWrapper">
     <div class="loading" id="loadingMsg">Loading roles…</div>
-    <div class="job-cards" id="jobCards"></div>
-    <table id="jobTable" style="display:none">
+    <div class="job-cards" id="jobCards" aria-live="polite"></div>
+    <table id="jobTable">
       <thead>
         <tr>
           <th class="sticky-tick">Mark</th>
@@ -334,11 +346,25 @@
 
 <script>
 const STORE_KEY = 'owais-applied-ids';
+const MOBILE_QUERY = window.matchMedia('(max-width: 900px), (hover: none) and (pointer: coarse)');
 let allJobs = [];
 let view = 'open';
 let applied = new Set();
 
 const tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7.5"/></svg>';
+
+function useCardLayout() {
+  return MOBILE_QUERY.matches;
+}
+
+function syncLayoutMode() {
+  document.body.classList.toggle('use-cards', useCardLayout());
+}
+
+MOBILE_QUERY.addEventListener('change', () => {
+  syncLayoutMode();
+  filterTable();
+});
 
 function loadApplied() {
   try { return new Set(JSON.parse(localStorage.getItem(STORE_KEY) || '[]')); }
@@ -401,10 +427,11 @@ function jobRowHtml(j) {
   const done = applied.has(j.id);
   const label = done ? 'Undo applied' : 'Mark as applied';
   const applyText = done ? 'Apply again' : 'Apply';
+  const id = esc(j.id);
   return {
     table: `<tr>
       <td class="sticky-tick">
-        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
+        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" data-action="toggle" data-job-id="${id}">${tickSvg}</button>
       </td>
       <td>
         <div class="title">${esc(j.title)}</div>
@@ -415,12 +442,12 @@ function jobRowHtml(j) {
       <td class="posted">${esc(formatDate(j.postedDate))}</td>
       <td class="posted">${esc(ageLabel(j.postedDate))}</td>
       <td class="actions">
-        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
+        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" data-action="apply" data-job-id="${id}">${applyText}</a>
       </td>
     </tr>`,
     card: `<article class="job-card">
       <div class="job-card-head">
-        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" onclick="toggleApplied('${esc(j.id)}')">${tickSvg}</button>
+        <button class="tick${done ? ' done' : ''}" type="button" title="${label}" aria-label="${label}" data-action="toggle" data-job-id="${id}">${tickSvg}</button>
         <div class="job-card-main">
           <div class="title">${esc(j.title)}</div>
           <div class="company">${esc(j.company)}</div>
@@ -432,33 +459,55 @@ function jobRowHtml(j) {
       </div>
       <div class="job-card-foot">
         <div class="job-card-dates">Posted ${esc(formatDate(j.postedDate))} · ${esc(ageLabel(j.postedDate))}</div>
-        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" onclick="markApplied('${esc(j.id)}')">${applyText}</a>
+        <a class="apply-link" href="${esc(j.applyUrl || j.jobUrl)}" target="_blank" rel="noopener" data-action="apply" data-job-id="${id}">${applyText}</a>
       </div>
     </article>`
   };
 }
 
+function handleJobAction(event) {
+  const target = event.target.closest('[data-action]');
+  if (!target) return;
+  const id = target.getAttribute('data-job-id');
+  if (!id) return;
+  if (target.dataset.action === 'toggle') {
+    event.preventDefault();
+    toggleApplied(id);
+  }
+  if (target.dataset.action === 'apply') {
+    markApplied(id);
+  }
+}
+
 async function loadJobs() {
   applied = loadApplied();
+  syncLayoutMode();
+  document.getElementById('jobBody').addEventListener('click', handleJobAction);
+  document.getElementById('jobCards').addEventListener('click', handleJobAction);
   try {
     const res = await fetch('data/items.json?_=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     allJobs = (data.jobs || []).filter(j => postedWithin7Days(j.postedDate));
     updateSourceInfo(allJobs);
-    const updated = new Date(data.lastUpdated);
-    const parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: 'Asia/Riyadh',
-      calendar: 'gregory',
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    }).formatToParts(updated);
-    const get = t => parts.find(p => p.type === t)?.value || '';
-    document.getElementById('lastUpdated').textContent =
-      `${get('day')}-${get('month')}-${get('year')} ${get('hour')}:${get('minute')} ${get('dayPeriod')} AST`;
+    let updatedLabel = '—';
+    try {
+      const updated = new Date(data.lastUpdated);
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Riyadh',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      }).formatToParts(updated);
+      const get = t => parts.find(p => p.type === t)?.value || '';
+      updatedLabel = `${get('day')}-${get('month')}-${get('year')} ${get('hour')}:${get('minute')} ${get('dayPeriod')} AST`;
+    } catch (_) {
+      updatedLabel = data.lastUpdated || '—';
+    }
+    document.getElementById('lastUpdated').textContent = updatedLabel;
     filterTable();
   } catch (e) {
     document.getElementById('loadingMsg').textContent = 'Could not load roles. Refresh the page.';
@@ -521,23 +570,37 @@ function renderTable(jobs) {
   document.getElementById('appliedCount').textContent = String([...applied].filter(id => allJobs.some(j => j.id === id)).length);
   const tbody = document.getElementById('jobBody');
   const cards = document.getElementById('jobCards');
+  const jobTable = document.getElementById('jobTable');
+  syncLayoutMode();
+  const cardLayout = useCardLayout();
+
   if (!jobs.length) {
-    document.getElementById('jobTable').style.display = 'none';
+    jobTable.classList.remove('is-visible');
+    cards.classList.remove('is-visible');
     cards.innerHTML = '';
+    tbody.innerHTML = '';
     document.getElementById('noJobs').style.display = 'block';
-    document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : 'You’re caught up';
-    document.getElementById('emptyBody').textContent = view === 'applied'
-      ? 'Roles you applied to are listed here. Tick again to put one back on Open.'
-      : 'No open roles match this filter.';
+    if (view === 'applied') {
+      document.getElementById('emptyTitle').textContent = 'Nothing marked yet';
+      document.getElementById('emptyBody').textContent = 'Roles you applied to are listed here. Tick again to put one back on Open.';
+    } else if (allJobs.length && [...applied].some(id => allJobs.some(j => j.id === id))) {
+      document.getElementById('emptyTitle').textContent = 'All roles marked applied';
+      document.getElementById('emptyBody').textContent = 'Switch to the Applied tab to review them, or tap a tick to move one back to Open.';
+    } else {
+      document.getElementById('emptyTitle').textContent = 'You’re caught up';
+      document.getElementById('emptyBody').textContent = 'No open roles match this filter.';
+    }
     document.getElementById('count').textContent = '';
     return;
   }
+
   document.getElementById('noJobs').style.display = 'none';
-  document.getElementById('jobTable').style.display = 'table';
   document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : ' open');
   const rows = jobs.map(jobRowHtml);
   tbody.innerHTML = rows.map(r => r.table).join('');
   cards.innerHTML = rows.map(r => r.card).join('');
+  jobTable.classList.toggle('is-visible', !cardLayout);
+  cards.classList.toggle('is-visible', cardLayout);
 }
 
 function downloadExcel() {
