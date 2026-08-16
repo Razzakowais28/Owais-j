@@ -22,6 +22,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests
       - name: Run update
+        id: update
+        continue-on-error: true
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: python scripts/scraper.py
@@ -37,3 +39,8 @@ jobs:
             git commit -m "Update data – ${TIMESTAMP}"
             git push
           fi
+      - name: Fail if scrape did not run
+        if: steps.update.outcome == 'failure'
+        run: |
+          echo "::error::Sync could not scrape new listings. Set the APIFY_TOKEN repository secret, then re-run the workflow."
+          exit 1

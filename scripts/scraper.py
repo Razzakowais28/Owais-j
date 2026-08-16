@@ -189,17 +189,30 @@ def scrape_naukrigulf(keyword, city):
 
 # ── main ─────────────────────────────────────────────────────────────────────
 
-def main():
-    if not APIFY_TOKEN:
-        print("ERROR: APIFY_TOKEN not set.")
-        return
+def prune_stale_jobs(jobs_data):
+    """Drop listings older than MAX_AGE_DAYS and refresh lastUpdated when needed."""
+    merged = []
+    seen_merge = set()
+    for j in jobs_data.get("jobs", []):
+        jid = j.get("id")
+        if not jid or jid in seen_merge:
+            continue
+        if not posted_within(j.get("postedDate")):
+            continue
+        seen_merge.add(jid)
+        merged.append(j)
 
-    seen_data = load_json(SEEN_FILE, {"seenIds": [], "seenTitlesCompanies": []})
+    changed = merged != jobs_data.get("jobs", [])
+    if changed:
+        jobs_data["jobs"] = merged
+        jobs_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        save_json(JOBS_FILE, jobs_data)
+        print(f"Pruned stale listings. Keeping {len(merged)} from last {MAX_AGE_DAYS} days.")
+    return merged, changed
+
+
+def scrape_all(seen_data, existing_ids):
     seen_ids = set(seen_data.get("seenIds", []))
-
-    jobs_data = load_json(JOBS_FILE, {"jobs": []})
-    existing_ids = {j["id"] for j in jobs_data.get("jobs", [])}
-
     raw = []
 
     # LinkedIn — all 4 cities
@@ -217,7 +230,6 @@ def main():
         for city in ["Riyadh", "Jeddah"]:
             raw.extend(scrape_naukrigulf(kw, city))
 
-    # De-duplicate and filter seen
     new_jobs = []
     seen_in_this_run = set()
     for j in raw:
@@ -235,6 +247,25 @@ def main():
         new_jobs.append(j)
 
     print(f"\nFound {len(raw)} raw jobs → {len(new_jobs)} new after dedup/filter")
+    return new_jobs, seen_ids
+
+
+def main():
+    seen_data = load_json(SEEN_FILE, {"seenIds": [], "seenTitlesCompanies": []})
+    jobs_data = load_json(JOBS_FILE, {"jobs": []})
+    existing_ids = {j["id"] for j in jobs_data.get("jobs", [])}
+
+    merged, pruned = prune_stale_jobs(jobs_data)
+    if pruned:
+        jobs_data = load_json(JOBS_FILE, {"jobs": []})
+        existing_ids = {j["id"] for j in jobs_data.get("jobs", [])}
+
+    if not APIFY_TOKEN:
+        print("ERROR: APIFY_TOKEN is not set.")
+        print("Add it in GitHub → Settings → Secrets and variables → Actions → New repository secret.")
+        raise SystemExit(1)
+
+    new_jobs, seen_ids = scrape_all(seen_data, existing_ids)
 
     merged = []
     seen_merge = set()
