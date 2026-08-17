@@ -1,19 +1,40 @@
 {
-  "lastUpdated": "2026-08-15T22:20:00Z",
   "jobs": [
     {
-      "id": "penny-fullstack-riyadh",
-      "title": "Full Stack Developer",
-      "company": "Penny Software",
-      "location": "Riyadh, Saudi Arabia",
+      "id": "8cc58823d520",
+      "title": "Software Engineer",
+      "company": "MinIO",
+      "location": "Riyadh Region",
       "city": "Riyadh",
-      "platform": "Indeed",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a",
-      "jobUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a"
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-16",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=5&pageNum=0&refId=6wpoAhSH67P0xkwwj7Bh%2Bg%3D%3D&trackingId=AGbGgo8QC6B0b0HUbnVKHA%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=5&pageNum=0&refId=6wpoAhSH67P0xkwwj7Bh%2Bg%3D%3D&trackingId=AGbGgo8QC6B0b0HUbnVKHA%3D%3D"
     },
     {
-      "id": "flint-lowcode-riyadh",
+      "id": "64b6775a6837",
+      "title": "Senior Software Engineer - QuantumBlack, AI by McKinsey",
+      "company": "QuantumBlack, AI by McKinsey",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-15",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=6wpoAhSH67P0xkwwj7Bh%2Bg%3D%3D&trackingId=KkXM7DZhgrYIc7alfaR3SQ%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=6wpoAhSH67P0xkwwj7Bh%2Bg%3D%3D&trackingId=KkXM7DZhgrYIc7alfaR3SQ%3D%3D"
+    },
+    {
+      "id": "c5ef8ba1e7a6",
+      "title": "Junior Web Developer",
+      "company": "Mosaic Conseil",
+      "location": "Dammam, Eastern, Saudi Arabia",
+      "city": "Dammam",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-15",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/junior-web-developer-at-mosaic-conseil-4453955325?position=2&pageNum=0&refId=Q8SuSq%2FIzph3WT0Se%2FRTTw%3D%3D&trackingId=csCXKNvtwB5PB%2BzIjs3ccQ%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/junior-web-developer-at-mosaic-conseil-4453955325?position=2&pageNum=0&refId=Q8SuSq%2FIzph3WT0Se%2FRTTw%3D%3D&trackingId=csCXKNvtwB5PB%2BzIjs3ccQ%3D%3D"
+    },
+    {
+      "id": "2a12117da9d1",
       "title": "Low code developer",
       "company": "Flint Consulting Ltd",
       "location": "Riyadh, Saudi Arabia",
@@ -24,158 +45,71 @@
       "jobUrl": "https://www.bayt.com/en/job/apply/index/5476552/"
     },
     {
-      "id": "flint-odoo-riyadh",
-      "title": "Odoo Techno-Functional Consultant",
-      "company": "Flint Consulting Ltd",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "Bayt",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://www.bayt.com/en/job/apply/index/5476425/",
-      "jobUrl": "https://www.bayt.com/en/job/apply/index/5476425/"
-    },
-    {
-      "id": "dreamforge-webdev-riyadh",
-      "title": "Web Developer",
-      "company": "DREAM FORGE TRADING CO",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "Bayt",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://www.bayt.com/en/saudi-arabia/jobs/web-developer-5475707/",
-      "jobUrl": "https://www.bayt.com/en/saudi-arabia/jobs/web-developer-5475707/"
-    },
-    {
-      "id": "innovationteam-ai-riyadh",
-      "title": "AI Engineer",
-      "company": "InnovationTeam",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-15",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-at-innovationteam-4454899453"
-    },
-    {
-      "id": "akkodis-cloud-khobar",
-      "title": "Cloud Engineer",
-      "company": "Akkodis",
-      "location": "Al Khobar, Saudi Arabia",
-      "city": "Al Khobar",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/cloud-engineer-at-akkodis-4453512481"
-    },
-    {
-      "id": "jal-erp-specialist-dhahran",
-      "title": "Enterprise Resource Planning (ERP) Specialist",
-      "company": "JAL International Co. Ltd.",
-      "location": "Dhahran, Saudi Arabia",
-      "city": "Dammam",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/enterprise-resource-planning-erp-specialist-at-jal-international-co-ltd-4452920284",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/enterprise-resource-planning-erp-specialist-at-jal-international-co-ltd-4452920284"
-    },
-    {
-      "id": "masterworks-ai-agentic-riyadh",
-      "title": "AI Engineer - Agentic",
-      "company": "Master Works",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/ai-engineer-agentic-at-master-works-4453642627"
-    },
-    {
-      "id": "raya-erpnext",
-      "title": "ERPNext Developer",
-      "company": "Raya logistic services",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://forms.gle/MW5a2rNJoNVwYmb57",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/erpnext-developer-at-raya-logistic-services-4450147416"
-    },
-    {
-      "id": "raqmiyat-dotnet-fullstack-riyadh",
-      "title": "Dot Net Full Stack Developer",
-      "company": "Raqmiyat L.L.C",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "NaukriGulf",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451",
-      "jobUrl": "https://www.naukrigulf.com/dot-net-full-stack-developer-jobs-in-riyadh-saudi-arabia-in-raqmiyat-l-l-c-2-to-8-years-m-cd-111352-jid-120826001451"
-    },
-    {
-      "id": "masterworks-bi-riyadh",
-      "title": "Business Intelligence Developer",
-      "company": "Master Works",
-      "location": "Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/business-intelligence-developer-at-master-works-4453071299"
-    },
-    {
-      "id": "bmchelix-productdev-riyadh",
+      "id": "061201d31294",
       "title": "Product Developer - Saudi Arabia",
       "company": "BMC Helix",
-      "location": "Riyadh, Saudi Arabia",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-12",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435570144"
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=23&pageNum=0&refId=x63yiyfmWP2Hzv35P5X46g%3D%3D&trackingId=5vCDHKoTCyFK2%2FPKka1ISw%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=23&pageNum=0&refId=x63yiyfmWP2Hzv35P5X46g%3D%3D&trackingId=5vCDHKoTCyFK2%2FPKka1ISw%3D%3D"
     },
     {
-      "id": "tamara-pe2qa-riyadh",
-      "title": "Product Engineer II - QA",
-      "company": "Tamara",
-      "location": "Riyadh, Saudi Arabia",
+      "id": "841fa0f94052",
+      "title": "Senior Software Engineer - Backend",
+      "company": "HungerStation | هنقرستيشن",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-11",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-qa-at-tamara-4423022566",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-qa-at-tamara-4423022566"
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=8&pageNum=0&refId=Uw7kRrXOSMkIFNsinA8ECA%3D%3D&trackingId=a94FvA7qcBhKVdilfOc6NA%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=8&pageNum=0&refId=Uw7kRrXOSMkIFNsinA8ECA%3D%3D&trackingId=a94FvA7qcBhKVdilfOc6NA%3D%3D"
     },
     {
-      "id": "sweater-react-native-riyadh",
-      "title": "Senior React Native Developer",
-      "company": "Sweater (سويتر)",
-      "location": "Riyadh, Saudi Arabia",
+      "id": "92fc98bb5ec4",
+      "title": "Senior PL/SQL Developer – Banking & ODS",
+      "company": "KALSOFT",
+      "location": "Riyadh Region",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-11",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-react-native-developer-at-%D8%B3%D9%88%D9%8A%D8%AA%D8%B1-sweater-4452430517",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-react-native-developer-at-%D8%B3%D9%88%D9%8A%D8%AA%D8%B1-sweater-4452430517"
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-pl-sql-developer-%E2%80%93-banking-ods-at-kalsoft-4450897940?position=18&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=fFq3CiRKOqPNGDF8kYCgNg%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-pl-sql-developer-%E2%80%93-banking-ods-at-kalsoft-4450897940?position=18&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=fFq3CiRKOqPNGDF8kYCgNg%3D%3D"
     },
     {
-      "id": "tamara-pe2web-riyadh",
-      "title": "Product Engineer II - Web",
-      "company": "Tamara",
-      "location": "Riyadh, Saudi Arabia",
+      "id": "13e980cdec0c",
+      "title": "Senior IBM BAW / BPM Developer",
+      "company": "KALSOFT",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-10",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-engineer-ii-web-at-tamara-4442541024"
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-bpm-developer-at-kalsoft-4451242310?position=16&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=qLx71qAcaXfh6jwSnY9rfw%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-bpm-developer-at-kalsoft-4451242310?position=16&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=qLx71qAcaXfh6jwSnY9rfw%3D%3D"
     },
     {
-      "id": "fip-educational-app",
-      "title": "Educational Application Developer",
-      "company": "Food Industries Polytechnic",
-      "location": "Riyadh, Saudi Arabia",
+      "id": "60e1eccb69b4",
+      "title": "Product Developer- Saudi Arabia",
+      "company": "BMC Helix",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
       "city": "Riyadh",
       "platform": "LinkedIn",
-      "postedDate": "2026-08-09",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/educational-application-developer-at-%D9%85%D8%B9%D9%87%D8%AF-%D8%A7%D9%84%D8%B5%D9%86%D8%A7%D8%B9%D8%A7%D8%AA-%D8%A7%D9%84%D8%BA%D8%B0%D8%A7%D8%A6%D9%8A%D8%A9-food-industries-polytechnic-4406211609"
+      "postedDate": "2026-08-13",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=8&pageNum=0&refId=x63yiyfmWP2Hzv35P5X46g%3D%3D&trackingId=8dhqGdST5fwKIFASkiGCNA%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=8&pageNum=0&refId=x63yiyfmWP2Hzv35P5X46g%3D%3D&trackingId=8dhqGdST5fwKIFASkiGCNA%3D%3D"
+    },
+    {
+      "id": "d77bba2d11c3",
+      "title": "Senior IBM BAW Developer",
+      "company": "Linnk Group",
+      "location": "Riyadh Region",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-13",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=10&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=lNV8A3rhrU3FDtYp9u2xLw%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=10&pageNum=0&refId=1f47V8pzO70tgXsiFIxvZQ%3D%3D&trackingId=lNV8A3rhrU3FDtYp9u2xLw%3D%3D"
     }
-  ]
+  ],
+  "lastUpdated": "2026-08-17T09:58:22Z"
 }

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Data refresh script. Runs on a schedule via GitHub Actions.
+Data refresh script. Runs on a schedule via GitHub Actions (8 AM & 6 PM AST).
+Manual refresh: Actions → Sync → Run workflow, or push any non-data change to main.
 """
 
-import os, json, time, hashlib, requests
+import os, json, time, hashlib, re, requests
 from datetime import datetime, timedelta, timezone
 
 APIFY_TOKEN = os.environ.get("APIFY_TOKEN", "")
@@ -19,9 +20,26 @@ KEYWORDS = [
 ]
 
 MAX_AGE_DAYS = 7
+MAX_JOBS = 10
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 JOBS_FILE = os.path.join(DATA_DIR, "items.json")
 SEEN_FILE = os.path.join(DATA_DIR, "seen.json")
+
+DEV_TITLE = re.compile(
+    r"\b("
+    r"developer|software engineer|full[\s-]?stack|front[\s-]?end|back[\s-]?end|"
+    r"web developer|mobile developer|react|node\.?js|erp\s*developer|erpnext|"
+    r"programmer|\.net developer|java developer|python developer|android developer|"
+    r"ios developer|flutter developer|product engineer"
+    r")\b",
+    re.I,
+)
+SKIP_TITLE = re.compile(
+    r"\b(director|manager|head of|lead recruiter|support engineer|network engineer|"
+    r"cyber\s*security|security engineer|sales|marketing|hr |human resources|"
+    r"accountant|finance|legal)\b",
+    re.I,
+)
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -54,6 +72,47 @@ def posted_within(posted, days=MAX_AGE_DAYS):
         return False
     cutoff = datetime.now(timezone.utc).date() - timedelta(days=days)
     return d >= cutoff
+
+def is_developer_role(title):
+    t = title or ""
+    if SKIP_TITLE.search(t):
+        return False
+    return bool(DEV_TITLE.search(t))
+
+def keep_top_developer_jobs(jobs, limit=MAX_JOBS):
+    dev_jobs = [j for j in jobs if is_developer_role(j.get("title", ""))]
+    dev_jobs.sort(key=lambda j: j.get("postedDate", ""), reverse=True)
+    return dev_jobs[:limit]
+
+def pick_rotated_jobs(scraped, previous_ids, limit=MAX_JOBS):
+    """Prefer developer roles not already on the board, then backfill by date."""
+    pool = [j for j in scraped if is_developer_role(j.get("title", ""))]
+    pool.sort(key=lambda j: j.get("postedDate", ""), reverse=True)
+    prev = set(previous_ids or [])
+    picked = [j for j in pool if j["id"] not in prev][:limit]
+    if len(picked) < limit:
+        seen = {j["id"] for j in picked}
+        for j in pool:
+            if len(picked) >= limit:
+                break
+            if j["id"] not in seen:
+                picked.append(j)
+                seen.add(j["id"])
+    return picked[:limit]
+
+def dedupe_jobs(jobs):
+    seen_ids = set()
+    seen_titles = set()
+    out = []
+    for j in jobs:
+        jid = j.get("id")
+        tc = f"{j.get('title', '').strip()}|{j.get('company', '').strip()}"
+        if not jid or jid in seen_ids or tc in seen_titles:
+            continue
+        seen_ids.add(jid)
+        seen_titles.add(tc)
+        out.append(j)
+    return out
 
 def run_actor(actor_slug, input_body, wait_secs=120):
     """Start an Apify actor run, wait for completion, return dataset items."""
@@ -189,81 +248,68 @@ def scrape_naukrigulf(keyword, city):
 
 # ── main ─────────────────────────────────────────────────────────────────────
 
-def main():
-    if not APIFY_TOKEN:
-        print("ERROR: APIFY_TOKEN not set.")
-        return
-
-    seen_data = load_json(SEEN_FILE, {"seenIds": [], "seenTitlesCompanies": []})
-    seen_ids = set(seen_data.get("seenIds", []))
-
-    jobs_data = load_json(JOBS_FILE, {"jobs": []})
-    existing_ids = {j["id"] for j in jobs_data.get("jobs", [])}
-
+def scrape_all():
     raw = []
 
-    # LinkedIn — all 4 cities
-    for kw in ["full stack developer software engineer react nodejs", "ERP developer frontend"]:
+    for kw in [
+        "full stack developer",
+        "software engineer react nodejs",
+        "frontend developer",
+        "backend developer",
+        "ERP developer",
+    ]:
         for city in ["Riyadh, Saudi Arabia", "Jeddah, Saudi Arabia", "Dammam, Saudi Arabia"]:
             raw.extend(scrape_linkedin(kw, city))
 
-    # Bayt — Riyadh + Jeddah
-    for kw in ["software developer", "full stack developer react"]:
+    for kw in ["software developer", "full stack developer", "web developer react"]:
         for city in ["Riyadh", "Jeddah", "Dammam", "Al Khobar"]:
             raw.extend(scrape_bayt(kw, city))
 
-    # NaukriGulf — Riyadh + Jeddah
-    for kw in ["software developer full stack react node"]:
+    for kw in ["software developer", "full stack developer react", "frontend developer"]:
         for city in ["Riyadh", "Jeddah"]:
             raw.extend(scrape_naukrigulf(kw, city))
 
-    # De-duplicate and filter seen
-    new_jobs = []
-    seen_in_this_run = set()
+    filtered = []
     for j in raw:
-        jid = j["id"]
-        if not j["title"] or not j["company"]:
+        if not j.get("title") or not j.get("company"):
+            continue
+        if not is_developer_role(j["title"]):
             continue
         if not posted_within(j.get("postedDate")):
             continue
-        tc_key = f"{j['title'].strip()}|{j['company'].strip()}"
-        if jid in seen_ids or jid in existing_ids or jid in seen_in_this_run:
-            continue
-        if tc_key in seen_data.get("seenTitlesCompanies", []):
-            continue
-        seen_in_this_run.add(jid)
-        new_jobs.append(j)
+        filtered.append(j)
 
-    print(f"\nFound {len(raw)} raw jobs → {len(new_jobs)} new after dedup/filter")
+    filtered = dedupe_jobs(filtered)
+    print(f"\nFound {len(raw)} raw jobs → {len(filtered)} developer roles after filter/dedup")
+    return filtered
 
-    merged = []
-    seen_merge = set()
-    for j in new_jobs + jobs_data.get("jobs", []):
-        jid = j.get("id")
-        if not jid or jid in seen_merge:
-            continue
-        if not posted_within(j.get("postedDate")):
-            continue
-        seen_merge.add(jid)
-        merged.append(j)
 
-    if merged == jobs_data.get("jobs", []) and not new_jobs:
-        print("No new jobs and no stale rows to drop.")
-        return
+def main():
+    if not APIFY_TOKEN:
+        print("ERROR: APIFY_TOKEN is not set.")
+        print("Add a repository secret named APIFY_TOKEN at:")
+        print("  GitHub repo → Settings → Secrets and variables → Actions → Secrets tab")
+        print("Use your personal API token from https://console.apify.com/account/integrations")
+        raise SystemExit(1)
 
-    jobs_data["jobs"] = merged
-    jobs_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    scraped = scrape_all()
+    merged = keep_top_developer_jobs(scraped)
+
+    jobs_data = {
+        "jobs": merged,
+        "lastUpdated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
     save_json(JOBS_FILE, jobs_data)
 
-    if new_jobs:
-        seen_data["seenIds"] = list(seen_ids | {j["id"] for j in new_jobs})
-        seen_data["seenTitlesCompanies"] = list(set(
-            seen_data.get("seenTitlesCompanies", []) +
-            [f"{j['title'].strip()}|{j['company'].strip()}" for j in new_jobs]
-        ))
-        save_json(SEEN_FILE, seen_data)
+    seen_data = {
+        "seenIds": [j["id"] for j in merged],
+        "seenTitlesCompanies": [
+            f"{j['title'].strip()}|{j['company'].strip()}" for j in merged
+        ],
+    }
+    save_json(SEEN_FILE, seen_data)
 
-    print(f"Done. Added {len(new_jobs)} new items. Keeping {len(merged)} from last {MAX_AGE_DAYS} days.")
+    print(f"Done. Refreshed feed with {len(merged)} developer roles (max {MAX_JOBS}).")
 
 if __name__ == "__main__":
     main()
