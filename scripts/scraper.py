@@ -84,6 +84,22 @@ def keep_top_developer_jobs(jobs, limit=MAX_JOBS):
     dev_jobs.sort(key=lambda j: j.get("postedDate", ""), reverse=True)
     return dev_jobs[:limit]
 
+def pick_rotated_jobs(scraped, previous_ids, limit=MAX_JOBS):
+    """Prefer developer roles not already on the board, then backfill by date."""
+    pool = [j for j in scraped if is_developer_role(j.get("title", ""))]
+    pool.sort(key=lambda j: j.get("postedDate", ""), reverse=True)
+    prev = set(previous_ids or [])
+    picked = [j for j in pool if j["id"] not in prev][:limit]
+    if len(picked) < limit:
+        seen = {j["id"] for j in picked}
+        for j in pool:
+            if len(picked) >= limit:
+                break
+            if j["id"] not in seen:
+                picked.append(j)
+                seen.add(j["id"])
+    return picked[:limit]
+
 def dedupe_jobs(jobs):
     seen_ids = set()
     seen_titles = set()
