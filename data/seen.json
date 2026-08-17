@@ -1,40 +1,4 @@
 {
-  "seenIds": [
-    "3aa7098cc374",
-    "c5ef8ba1e7a6",
-    "d53c544995fa",
-    "8cc58823d520",
-    "13e980cdec0c",
-    "b4eacd749279",
-    "penny-fullstack-riyadh",
-    "cefff5f5f87d",
-    "375de82afc89",
-    "60e1eccb69b4",
-    "d77bba2d11c3",
-    "64b6775a6837",
-    "061201d31294",
-    "2a12117da9d1",
-    "268e6cd6a036",
-    "dreamforge-webdev-riyadh",
-    "930657eebc4f"
-  ],
-  "seenTitlesCompanies": [
-    "Junior Web Developer|Mosaic Conseil",
-    "Senior IBM App Connect Developer — Middleware|KALSOFT",
-    "Low code developer|Flint Consulting Ltd",
-    "Microservices Developer|Müller's Solutions",
-    "Senior Software Engineer - QuantumBlack, AI by McKinsey|QuantumBlack, AI by McKinsey",
-    "Product Developer- Saudi Arabia|BMC Helix",
-    "Senior IBM BAW Developer|Linnk Group",
-    "Business Intelligence, Developer|Master Works",
-    "Senior IBM BAW / BPM Developer|KALSOFT",
-    "Web Developer|DREAM FORGE TRADING CO",
-    "Senior React Native Developer|سويتر | Sweater",
-    "Product Engineer II - QA|Tamara",
-    "Senior Software Engineer (Android)|Delivery Hero SE",
-    "Full Stack Developer|Penny Software",
-    "Product Developer - Saudi Arabia|BMC Helix",
-    "Software Engineer|MinIO",
-    "ERPNext Developer|Raya logistic services"
-  ]
+  "seenIds": [],
+  "seenTitlesCompanies": []
 }
