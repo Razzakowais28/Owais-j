@@ -1,4 +1,26 @@
 {
-  "seenIds": [],
-  "seenTitlesCompanies": []
+  "seenIds": [
+    "8cc58823d520",
+    "64b6775a6837",
+    "c5ef8ba1e7a6",
+    "2a12117da9d1",
+    "061201d31294",
+    "841fa0f94052",
+    "d53c544995fa",
+    "13e980cdec0c",
+    "92fc98bb5ec4",
+    "60e1eccb69b4"
+  ],
+  "seenTitlesCompanies": [
+    "Software Engineer|MinIO",
+    "Senior Software Engineer - QuantumBlack, AI by McKinsey|QuantumBlack, AI by McKinsey",
+    "Junior Web Developer|Mosaic Conseil",
+    "Low code developer|Flint Consulting Ltd",
+    "Product Developer - Saudi Arabia|BMC Helix",
+    "Senior Software Engineer - Backend|HungerStation | هنقرستيشن",
+    "Senior IBM App Connect Developer — Middleware|KALSOFT",
+    "Senior IBM BAW / BPM Developer|KALSOFT",
+    "Senior PL/SQL Developer – Banking & ODS|KALSOFT",
+    "Product Developer- Saudi Arabia|BMC Helix"
+  ]
 }
