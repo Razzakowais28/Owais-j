@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-15T22:15:00Z",
+  "lastUpdated": "2026-08-15T22:20:00Z",
   "jobs": [
     {
       "id": "penny-fullstack-riyadh",
@@ -11,6 +11,28 @@
       "postedDate": "2026-08-14",
       "applyUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a",
       "jobUrl": "https://www.indeed.com/viewjob?jk=76329a738101740a"
+    },
+    {
+      "id": "flint-lowcode-riyadh",
+      "title": "Low code developer",
+      "company": "Flint Consulting Ltd",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "Bayt",
+      "postedDate": "2026-08-15",
+      "applyUrl": "https://www.bayt.com/en/job/apply/index/5476552/",
+      "jobUrl": "https://www.bayt.com/en/job/apply/index/5476552/"
+    },
+    {
+      "id": "flint-odoo-riyadh",
+      "title": "Odoo Techno-Functional Consultant",
+      "company": "Flint Consulting Ltd",
+      "location": "Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "Bayt",
+      "postedDate": "2026-08-14",
+      "applyUrl": "https://www.bayt.com/en/job/apply/index/5476425/",
+      "jobUrl": "https://www.bayt.com/en/job/apply/index/5476425/"
     },
     {
       "id": "dreamforge-webdev-riyadh",

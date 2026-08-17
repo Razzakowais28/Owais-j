@@ -29,7 +29,7 @@
     line-height: 1.45;
   }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 36px 22px 80px; }
-  header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 28px; }
+  header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 22px; }
   .kicker { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
   h1 {
     font-family: Fraunces, Georgia, serif;
@@ -70,6 +70,80 @@
   }
   .btn:hover { border-color: var(--ink); }
   .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+  .section { margin-bottom: 28px; }
+  .section > h2 {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .dash {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .viz {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 20px 20px;
+    min-height: 168px;
+  }
+  .viz h3 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .viz .num {
+    font-family: Fraunces, Georgia, serif;
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .viz .sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 6px 0 14px;
+  }
+  .meter {
+    display: flex;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+  .meter span { display: block; height: 100%; }
+  .meter .seg-open { background: var(--accent); }
+  .meter .seg-applied { background: #c4b8a6; }
+  .meter .seg-new { background: var(--ink); }
+  .legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend i {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .bars { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .bar-row { display: grid; grid-template-columns: 88px 1fr 28px; gap: 8px; align-items: center; font-size: 12px; }
+  .bar-row .name { color: var(--muted); }
+  .bar-row .track { height: 8px; background: var(--paper); border-radius: 999px; overflow: hidden; }
+  .bar-row .fill { height: 100%; background: var(--accent); border-radius: 999px; }
+  .bar-row .n { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
 
   .board { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow-x: auto; }
   table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 760px; }
@@ -132,6 +206,7 @@
     .meta { text-align: left; }
     .count { margin-left: 0; width: 100%; }
     th:nth-child(4), td:nth-child(4) { display: none; }
+    .dash { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -148,6 +223,44 @@
       <strong id="lastUpdated">Loading…</strong>
     </div>
   </header>
+
+  <section class="section" id="dashboard">
+    <h2>Dashboard</h2>
+    <div class="dash">
+      <article class="viz">
+        <h3>Pipeline</h3>
+        <div class="num" id="statOpen">0</div>
+        <p class="sub">Open roles this week</p>
+        <div class="meter" id="meterPipeline">
+          <span class="seg-open" id="segOpen" style="width:0%"></span>
+          <span class="seg-applied" id="segApplied" style="width:0%"></span>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--accent)"></i>Open <strong id="statOpenLbl">0</strong></span>
+          <span><i style="background:#c4b8a6"></i>Applied <strong id="statApplied">0</strong></span>
+        </div>
+      </article>
+      <article class="viz">
+        <h3>Freshness</h3>
+        <div class="num" id="statNew">0</div>
+        <p class="sub">Posted in the last 48 hours</p>
+        <div class="meter">
+          <span class="seg-new" id="segNew" style="width:0%"></span>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--ink)"></i>Last 2 days vs rest of the week</span>
+        </div>
+      </article>
+      <article class="viz">
+        <h3>By source</h3>
+        <p class="sub" style="margin-top:0">Listings in the last 7 days</p>
+        <div class="bars" id="sourceBars"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Roles</h2>
 
   <div class="toolbar">
     <div class="tabs" role="tablist">
@@ -196,12 +309,14 @@
       <p id="emptyBody">No open roles match this filter.</p>
     </div>
   </div>
+  </section>
 </div>
 
 <script>
 const STORE_KEY = 'owais-applied-ids';
 let allJobs = [];
 let view = 'open';
+let recentOnly = false;
 let applied = new Set();
 
 const tickSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7.5"/></svg>';
@@ -234,17 +349,27 @@ function formatDate(iso) {
   return `${m[3]}-${m[2]}-${m[1]}`;
 }
 
+function riyadhYmd(d = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Riyadh', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(d);
+}
+
+function isNew48h(postedDate) {
+  const posted = (postedDate || '').slice(0, 10);
+  if (!posted) return false;
+  const today = riyadhYmd();
+  const yest = new Date(today + 'T00:00:00+03:00');
+  yest.setDate(yest.getDate() - 1);
+  return posted === today || posted === riyadhYmd(yest);
+}
+
 function postedWithin7Days(postedDate) {
   if (!postedDate) return false;
-  const today = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Riyadh', year: 'numeric', month: '2-digit', day: '2-digit'
-  }).format(new Date());
+  const today = riyadhYmd();
   const cutoff = new Date(today + 'T00:00:00+03:00');
   cutoff.setDate(cutoff.getDate() - 7);
-  const cutoffYmd = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Asia/Riyadh', year: 'numeric', month: '2-digit', day: '2-digit'
-  }).format(cutoff);
-  return postedDate.slice(0, 10) >= cutoffYmd;
+  return postedDate.slice(0, 10) >= riyadhYmd(cutoff);
 }
 
 async function loadJobs() {
@@ -286,6 +411,7 @@ function visibleJobs() {
     const isApplied = applied.has(j.id);
     if (view === 'open' && isApplied) return false;
     if (view === 'applied' && !isApplied) return false;
+    if (recentOnly && !isNew48h(j.postedDate)) return false;
     const matchQ = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q);
     const matchCity = !city || j.city === city;
     const matchPlatform = !platform || j.platform === platform;
@@ -295,9 +421,36 @@ function visibleJobs() {
 
 function setView(next) {
   view = next;
+  recentOnly = false;
   document.getElementById('tabOpen').classList.toggle('active', next === 'open');
   document.getElementById('tabApplied').classList.toggle('active', next === 'applied');
   filterTable();
+}
+
+function updateTiles() {
+  const openN = allJobs.filter(j => !applied.has(j.id)).length;
+  const appliedN = allJobs.filter(j => applied.has(j.id)).length;
+  const newN = allJobs.filter(j => isNew48h(j.postedDate)).length;
+  const total = allJobs.length || 1;
+  document.getElementById('statOpen').textContent = String(openN);
+  document.getElementById('statOpenLbl').textContent = String(openN);
+  document.getElementById('statApplied').textContent = String(appliedN);
+  document.getElementById('statNew').textContent = String(newN);
+  document.getElementById('segOpen').style.width = `${(openN / total) * 100}%`;
+  document.getElementById('segApplied').style.width = `${(appliedN / total) * 100}%`;
+  document.getElementById('segNew').style.width = `${(newN / total) * 100}%`;
+
+  const sources = ['LinkedIn', 'Bayt', 'NaukriGulf', 'Indeed'];
+  const counts = Object.fromEntries(sources.map(s => [s, allJobs.filter(j => j.platform === s).length]));
+  const max = Math.max(1, ...Object.values(counts));
+  document.getElementById('sourceBars').innerHTML = sources.map(s => {
+    const n = counts[s];
+    return `<div class="bar-row">
+      <span class="name">${esc(s)}</span>
+      <div class="track"><div class="fill" style="width:${(n / max) * 100}%"></div></div>
+      <span class="n">${n}</span>
+    </div>`;
+  }).join('');
 }
 
 function markApplied(id) {
@@ -321,26 +474,31 @@ function clearFilters() {
   document.getElementById('search').value = '';
   document.getElementById('cityFilter').value = '';
   document.getElementById('platformFilter').value = '';
+  recentOnly = false;
+  if (view === 'open') updateTiles();
   filterTable();
 }
 
 function renderTable(jobs) {
   document.getElementById('loadingMsg').style.display = 'none';
-  document.getElementById('appliedCount').textContent = String([...applied].filter(id => allJobs.some(j => j.id === id)).length);
+  updateTiles();
+  document.getElementById('appliedCount').textContent = String(allJobs.filter(j => applied.has(j.id)).length);
   const tbody = document.getElementById('jobBody');
   if (!jobs.length) {
     document.getElementById('jobTable').style.display = 'none';
     document.getElementById('noJobs').style.display = 'block';
-    document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : 'You’re caught up';
+    document.getElementById('emptyTitle').textContent = view === 'applied' ? 'Nothing marked yet' : (recentOnly ? 'Nothing in the last 48 hours' : 'You’re caught up');
     document.getElementById('emptyBody').textContent = view === 'applied'
       ? 'Roles you applied to are listed here. Tick again to put one back on Open.'
-      : 'No open roles match this filter.';
+      : (recentOnly
+        ? 'No open roles were posted today or yesterday.'
+        : 'No open roles match this filter.');
     document.getElementById('count').textContent = '';
     return;
   }
   document.getElementById('noJobs').style.display = 'none';
   document.getElementById('jobTable').style.display = 'table';
-  document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : ' open');
+  document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : (recentOnly ? ' new' : ' open'));
   tbody.innerHTML = jobs.map(j => {
     const done = applied.has(j.id);
     const label = done ? 'Undo applied' : 'Mark as applied';
