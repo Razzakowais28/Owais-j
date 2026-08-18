@@ -295,26 +295,90 @@
   .loading { text-align: center; padding: 56px; color: var(--muted); }
   .actions { text-align: right; white-space: nowrap; }
   @media (max-width: 900px) {
-    .wrap { padding: 20px 16px 40px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
-    h1 { font-size: 28px; }
-    header { align-items: flex-start; margin-bottom: 20px; }
+    .wrap {
+      padding: 16px 14px 32px;
+      padding-bottom: calc(32px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    h1 { font-size: 26px; }
+    header { align-items: flex-start; margin-bottom: 12px; }
     .meta { text-align: left; width: 100%; }
-    .sources { padding: 14px; }
-    .source-grid { grid-template-columns: 1fr; }
-    .dash { grid-template-columns: 1fr; }
-    .toolbar {
+    .cities { font-size: 12px; }
+
+    #dashboard { order: 2; margin-bottom: 14px; }
+    #dashboard > h2 { font-size: 18px; margin-bottom: 8px; }
+    .dash {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .viz {
+      min-width: 240px;
+      scroll-snap-align: start;
+      min-height: 0;
+      padding: 14px 16px;
+      flex-shrink: 0;
+    }
+    .viz .num { font-size: 28px; }
+
+    .section-roles { order: 3; margin-bottom: 12px; }
+    .section-roles > h2 { font-size: 18px; margin-bottom: 8px; }
+    .roles-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .roles-top h2 { margin-bottom: 0; }
+    .roles-top .count { margin: 0; font-size: 13px; font-weight: 600; color: var(--accent); }
+
+    .tabs-roles {
+      display: flex;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 3px;
+      margin-bottom: 12px;
+    }
+    .tabs-roles .tab { flex: 1; text-align: center; min-height: 44px; }
+
+    .sources-panel { order: 99; margin-top: 8px; }
+    .sources-panel summary,
+    .filter-panel summary {
+      list-style: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sources-panel summary::-webkit-details-marker,
+    .filter-panel summary::-webkit-details-marker { display: none; }
+    .sources-panel[open] summary,
+    .filter-panel[open] summary { border-radius: 12px 12px 0 0; margin-bottom: 0; }
+    .sources-panel .sources { margin: 0; border-radius: 0 0 12px 12px; border-top: 0; }
+    .filter-panel { margin-top: 12px; }
+    .filter-panel .toolbar {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      padding: 12px;
+      margin: 0;
+      border-radius: 0 0 12px 12px;
+      border-top: 0;
     }
-    .tabs { grid-column: 1 / -1; width: 100%; display: flex; }
-    .tab { flex: 1; text-align: center; min-height: 44px; }
-    #search { grid-column: 1 / -1; width: 100%; min-width: 0; }
-    #cityFilter, #platformFilter { width: 100%; }
-    .btn { width: 100%; }
-    #refreshBtn { grid-column: 1 / -1; width: 100%; }
-    .count { grid-column: 1 / -1; width: 100%; text-align: center; margin-left: 0; }
+    .filter-panel .toolbar #search { grid-column: 1 / -1; width: 100%; min-width: 0; }
+    .filter-panel .toolbar #cityFilter,
+    .filter-panel .toolbar #platformFilter { width: 100%; }
+    .filter-panel .toolbar .btn { width: 100%; }
+    .filter-panel .toolbar #refreshBtn { grid-column: 1 / -1; }
+    .filter-panel .toolbar .count { display: none; }
+
     .board {
       overflow: visible;
       background: transparent;
@@ -323,7 +387,20 @@
     }
     #jobTable.is-visible { display: none !important; }
     .job-cards.is-visible { display: grid !important; }
-    .empty, .loading { padding: 40px 12px; }
+    .empty, .loading { padding: 32px 12px; }
+    .desktop-toolbar { display: none !important; }
+  }
+  @media (min-width: 901px) {
+    .tabs-roles { display: none; }
+    .roles-top { display: none; }
+    .filter-panel summary { display: none; }
+    .filter-panel .toolbar { display: flex; margin-bottom: 18px; }
+    .sources-panel summary { display: none; }
+    .sources-panel .sources { display: block; margin-bottom: 18px; }
+    .count-desktop { margin-left: auto; }
+  }
+  @media (max-width: 900px) {
+    .sources-panel .sources > h2 { display: none; }
   }
   @media (max-width: 720px) {
     th:nth-child(4), td:nth-child(4) { display: none; }
@@ -351,31 +428,6 @@
       <strong id="lastUpdated">Loading…</strong>
     </div>
   </header>
-
-  <section class="sources" aria-label="Data sources">
-    <h2>Where this is fetched from</h2>
-    <div class="source-grid">
-      <div class="source-item">
-        <strong>Live data file</strong>
-        <a id="dataFileLink" href="data/items.json" target="_blank" rel="noopener">data/items.json</a>
-        <div>Loaded by this page on every visit.</div>
-      </div>
-      <div class="source-item">
-        <strong>Job boards scraped</strong>
-        <div class="source-pills" id="sourceBoards">
-          <span>LinkedIn</span>
-          <span>Bayt</span>
-          <span>NaukriGulf</span>
-        </div>
-        <div>Via Apify scrapers in <code>scripts/scraper.py</code>.</div>
-      </div>
-      <div class="source-item">
-        <strong>Auto refresh</strong>
-        <div>GitHub Actions · 8:00 AM & 6:00 PM AST</div>
-        <div id="sourceCounts">—</div>
-      </div>
-    </div>
-  </section>
 
   <section class="section" id="dashboard">
     <h2>Dashboard</h2>
@@ -412,35 +464,16 @@
     </div>
   </section>
 
-  <section class="section">
-    <h2>Roles</h2>
-
-  <div class="toolbar">
-    <div class="tabs" role="tablist">
-      <button class="tab active" id="tabOpen" type="button" onclick="setView('open')">Open</button>
-      <button class="tab" id="tabApplied" type="button" onclick="setView('applied')">Applied <span id="appliedCount">0</span></button>
+  <section class="section section-roles">
+    <div class="roles-top">
+      <h2>Roles</h2>
+      <span class="count" id="count"></span>
     </div>
-    <input type="search" id="search" placeholder="Search title or company" oninput="filterTable()">
-    <select id="cityFilter" onchange="filterTable()">
-      <option value="">All cities</option>
-      <option value="Riyadh">Riyadh</option>
-      <option value="Jeddah">Jeddah</option>
-      <option value="Dammam">Dammam</option>
-      <option value="Al Khobar">Al Khobar</option>
-    </select>
-    <select id="platformFilter" onchange="filterTable()">
-      <option value="">All sources</option>
-      <option value="LinkedIn">LinkedIn</option>
-      <option value="Bayt">Bayt</option>
-      <option value="NaukriGulf">NaukriGulf</option>
-      <option value="Glassdoor">Glassdoor</option>
-      <option value="Indeed">Indeed</option>
-    </select>
-    <button class="btn" type="button" onclick="clearFilters()">Clear</button>
-    <button class="btn" type="button" onclick="downloadExcel()">Export</button>
-    <button class="btn btn-refresh" id="refreshBtn" type="button" onclick="refreshJobs()">↻ Refresh jobs</button>
-    <span class="count" id="count"></span>
-  </div>
+
+    <div class="tabs tabs-roles" role="tablist">
+      <button class="tab active" id="tabOpenMobile" type="button" onclick="setView('open')">Open</button>
+      <button class="tab" id="tabAppliedMobile" type="button" onclick="setView('applied')">Applied <span id="appliedCountMobile">0</span></button>
+    </div>
 
   <div class="board" id="tableWrapper">
     <div class="loading" id="loadingMsg">Loading roles…</div>
@@ -464,7 +497,65 @@
       <p id="emptyBody">No open roles match this filter.</p>
     </div>
   </div>
+
+  <details class="filter-panel">
+    <summary>Search &amp; filters</summary>
+  <div class="toolbar desktop-toolbar">
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tabOpen" type="button" onclick="setView('open')">Open</button>
+      <button class="tab" id="tabApplied" type="button" onclick="setView('applied')">Applied <span id="appliedCount">0</span></button>
+    </div>
+    <input type="search" id="search" placeholder="Search title or company" oninput="filterTable()">
+    <select id="cityFilter" onchange="filterTable()">
+      <option value="">All cities</option>
+      <option value="Riyadh">Riyadh</option>
+      <option value="Jeddah">Jeddah</option>
+      <option value="Dammam">Dammam</option>
+      <option value="Al Khobar">Al Khobar</option>
+    </select>
+    <select id="platformFilter" onchange="filterTable()">
+      <option value="">All sources</option>
+      <option value="LinkedIn">LinkedIn</option>
+      <option value="Bayt">Bayt</option>
+      <option value="NaukriGulf">NaukriGulf</option>
+      <option value="Glassdoor">Glassdoor</option>
+      <option value="Indeed">Indeed</option>
+    </select>
+    <button class="btn" type="button" onclick="clearFilters()">Clear</button>
+    <button class="btn" type="button" onclick="downloadExcel()">Export</button>
+    <button class="btn btn-refresh" id="refreshBtn" type="button" onclick="refreshJobs()">↻ Refresh jobs</button>
+    <span class="count count-desktop" id="countDesktop"></span>
+  </div>
+  </details>
   </section>
+
+  <details class="sources-panel">
+    <summary>Where data comes from</summary>
+  <section class="sources" aria-label="Data sources">
+    <h2>Where this is fetched from</h2>
+    <div class="source-grid">
+      <div class="source-item">
+        <strong>Live data file</strong>
+        <a id="dataFileLink" href="data/items.json" target="_blank" rel="noopener">data/items.json</a>
+        <div>Loaded by this page on every visit.</div>
+      </div>
+      <div class="source-item">
+        <strong>Job boards scraped</strong>
+        <div class="source-pills" id="sourceBoards">
+          <span>LinkedIn</span>
+          <span>Bayt</span>
+          <span>NaukriGulf</span>
+        </div>
+        <div>Via Apify scrapers in <code>scripts/scraper.py</code>.</div>
+      </div>
+      <div class="source-item">
+        <strong>Auto refresh</strong>
+        <div>GitHub Actions · 8:00 AM & 6:00 PM AST</div>
+        <div id="sourceCounts">—</div>
+      </div>
+    </div>
+  </section>
+  </details>
 </div>
 
 <script>
@@ -732,6 +823,8 @@ function setView(next) {
   view = next;
   document.getElementById('tabOpen').classList.toggle('active', next === 'open');
   document.getElementById('tabApplied').classList.toggle('active', next === 'applied');
+  document.getElementById('tabOpenMobile').classList.toggle('active', next === 'open');
+  document.getElementById('tabAppliedMobile').classList.toggle('active', next === 'applied');
   filterTable();
 }
 
@@ -761,13 +854,16 @@ function clearFilters() {
 
 function renderTable(jobs) {
   document.getElementById('loadingMsg').style.display = 'none';
+  const appliedN = [...applied].filter(id => allJobs.some(j => j.id === id)).length;
+  document.getElementById('appliedCount').textContent = String(appliedN);
+  document.getElementById('appliedCountMobile').textContent = String(appliedN);
   updateTiles();
-  document.getElementById('appliedCount').textContent = String([...applied].filter(id => allJobs.some(j => j.id === id)).length);
   const tbody = document.getElementById('jobBody');
   const cards = document.getElementById('jobCards');
   const jobTable = document.getElementById('jobTable');
   syncLayoutMode();
   const cardLayout = useCardLayout();
+  const countText = jobs.length ? jobs.length + (view === 'applied' ? ' applied' : ' open') : '';
 
   if (!jobs.length) {
     jobTable.classList.remove('is-visible');
@@ -778,7 +874,7 @@ function renderTable(jobs) {
     if (view === 'applied') {
       document.getElementById('emptyTitle').textContent = 'Nothing marked yet';
       document.getElementById('emptyBody').textContent = 'Roles you applied to are listed here. Tick again to put one back on Open.';
-    } else if (allJobs.length && [...applied].some(id => allJobs.some(j => j.id === id))) {
+    } else if (view === 'open' && allJobs.length && allJobs.every(j => applied.has(j.id))) {
       document.getElementById('emptyTitle').textContent = 'All roles marked applied';
       document.getElementById('emptyBody').textContent = 'Switch to the Applied tab to review them, or tap a tick to move one back to Open.';
     } else {
@@ -786,11 +882,13 @@ function renderTable(jobs) {
       document.getElementById('emptyBody').textContent = 'No open roles match this filter.';
     }
     document.getElementById('count').textContent = '';
+    document.getElementById('countDesktop').textContent = '';
     return;
   }
 
   document.getElementById('noJobs').style.display = 'none';
-  document.getElementById('count').textContent = jobs.length + (view === 'applied' ? ' applied' : ' open');
+  document.getElementById('count').textContent = countText;
+  document.getElementById('countDesktop').textContent = countText;
   const rows = jobs.map(jobRowHtml);
   tbody.innerHTML = rows.map(r => r.table).join('');
   cards.innerHTML = rows.map(r => r.card).join('');
