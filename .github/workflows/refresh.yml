@@ -1,14 +1,7 @@
 name: Sync
 
 on:
-  schedule:
-    - cron: '0 5 * * *'   # 8:00 AM AST (Asia/Riyadh = UTC+3)
-    - cron: '0 15 * * *'  # 6:00 PM AST (Asia/Riyadh = UTC+3)
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'data/**'
 
 permissions:
   contents: write
