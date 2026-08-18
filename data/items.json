@@ -1,6 +1,28 @@
 {
   "jobs": [
     {
+      "id": "1eec5e2f6e0b",
+      "title": "Mobile Developer",
+      "company": "Cognizant",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-17",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/mobile-developer-at-cognizant-4444885629?position=4&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=n43%2FHrVdJ1GPC3bxebwmnQ%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/mobile-developer-at-cognizant-4444885629?position=4&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=n43%2FHrVdJ1GPC3bxebwmnQ%3D%3D"
+    },
+    {
+      "id": "615f03c52c5a",
+      "title": "Senior PHP Backend Developer (Riyadh, KSA)",
+      "company": "FileCloud",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-17",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-php-backend-developer-riyadh-ksa-at-filecloud-4455389010?position=20&pageNum=0&refId=hw6LMmJQysWb2sUKfiPb0w%3D%3D&trackingId=I85Wr1y9R1pw4QFhlQDT%2FQ%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-php-backend-developer-riyadh-ksa-at-filecloud-4455389010?position=20&pageNum=0&refId=hw6LMmJQysWb2sUKfiPb0w%3D%3D&trackingId=I85Wr1y9R1pw4QFhlQDT%2FQ%3D%3D"
+    },
+    {
       "id": "3a00856004c3",
       "title": "Oracle ERP Developer",
       "company": "TAWANTECH",
@@ -8,8 +30,19 @@
       "city": "Riyadh",
       "platform": "LinkedIn",
       "postedDate": "2026-08-17",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/oracle-erp-developer-at-tawantech-4455286256?position=4&pageNum=1&refId=TMdKsCvR40ISTiHGlvtxEQ%3D%3D&trackingId=VO%2BpUg2Pv6AIJ5S%2Bc%2BuBwA%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/oracle-erp-developer-at-tawantech-4455286256?position=4&pageNum=1&refId=TMdKsCvR40ISTiHGlvtxEQ%3D%3D&trackingId=VO%2BpUg2Pv6AIJ5S%2Bc%2BuBwA%3D%3D"
+      "applyUrl": "https://sa.linkedin.com/jobs/view/oracle-erp-developer-at-tawantech-4455286256?position=18&pageNum=0&refId=0FsgEFxuI4ZLVadgqWCgbg%3D%3D&trackingId=F8xOwMH8JPOMPyjQIYmqDg%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/oracle-erp-developer-at-tawantech-4455286256?position=18&pageNum=0&refId=0FsgEFxuI4ZLVadgqWCgbg%3D%3D&trackingId=F8xOwMH8JPOMPyjQIYmqDg%3D%3D"
+    },
+    {
+      "id": "76fd0aa8f2c9",
+      "title": "SharePoint Developer",
+      "company": "Trace Systems Inc.",
+      "location": "Riyadh, Riyadh, Saudi Arabia",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-17",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/sharepoint-developer-at-trace-systems-inc-4455340087?position=22&pageNum=0&refId=Hzgq%2FWLxtWpuC%2FGKROlacg%3D%3D&trackingId=pxKvKWrmoWEZf2zMmEp44Q%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/sharepoint-developer-at-trace-systems-inc-4455340087?position=22&pageNum=0&refId=Hzgq%2FWLxtWpuC%2FGKROlacg%3D%3D&trackingId=pxKvKWrmoWEZf2zMmEp44Q%3D%3D"
     },
     {
       "id": "8cc58823d520",
@@ -19,8 +52,8 @@
       "city": "Riyadh",
       "platform": "LinkedIn",
       "postedDate": "2026-08-16",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=5&pageNum=0&refId=uBzj%2BU7ee0Mmse8O5RIfJg%3D%3D&trackingId=BXeSILHLlOSHJQn3k4gt%2Bw%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=5&pageNum=0&refId=uBzj%2BU7ee0Mmse8O5RIfJg%3D%3D&trackingId=BXeSILHLlOSHJQn3k4gt%2Bw%3D%3D"
+      "applyUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=6&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=j1sRQ1z%2BBrneHmuUOiT4eA%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/software-engineer-at-minio-4428125825?position=6&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=j1sRQ1z%2BBrneHmuUOiT4eA%3D%3D"
     },
     {
       "id": "64b6775a6837",
@@ -30,19 +63,8 @@
       "city": "Riyadh",
       "platform": "LinkedIn",
       "postedDate": "2026-08-15",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=uBzj%2BU7ee0Mmse8O5RIfJg%3D%3D&trackingId=JTcZdypglsVzApeQGVYCxA%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=uBzj%2BU7ee0Mmse8O5RIfJg%3D%3D&trackingId=JTcZdypglsVzApeQGVYCxA%3D%3D"
-    },
-    {
-      "id": "c5ef8ba1e7a6",
-      "title": "Junior Web Developer",
-      "company": "Mosaic Conseil",
-      "location": "Dammam, Eastern, Saudi Arabia",
-      "city": "Dammam",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-15",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/junior-web-developer-at-mosaic-conseil-4453955325?position=1&pageNum=0&refId=%2F%2FcS05PZ5vzp%2BNn3%2BiyYRQ%3D%3D&trackingId=W%2FmOXsEmxoEPy1LXThw1Zg%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/junior-web-developer-at-mosaic-conseil-4453955325?position=1&pageNum=0&refId=%2F%2FcS05PZ5vzp%2BNn3%2BiyYRQ%3D%3D&trackingId=W%2FmOXsEmxoEPy1LXThw1Zg%3D%3D"
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=hdPTAiw4optKQMgSnmJ4hg%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-quantumblack-ai-by-mckinsey-at-quantumblack-ai-by-mckinsey-4315108715?position=3&pageNum=0&refId=%2FCPCLkq0LnZ2yg5mkMytfw%3D%3D&trackingId=hdPTAiw4optKQMgSnmJ4hg%3D%3D"
     },
     {
       "id": "2a12117da9d1",
@@ -56,17 +78,6 @@
       "jobUrl": "https://www.bayt.com/en/job/apply/index/5476552/"
     },
     {
-      "id": "061201d31294",
-      "title": "Product Developer - Saudi Arabia",
-      "company": "BMC Helix",
-      "location": "Riyadh, Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=29&pageNum=0&refId=MRWNVFDoaMMMDBXXaoiXGQ%3D%3D&trackingId=XiYXAVVGNDIdhjYD7g9ePw%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435566289?position=29&pageNum=0&refId=MRWNVFDoaMMMDBXXaoiXGQ%3D%3D&trackingId=XiYXAVVGNDIdhjYD7g9ePw%3D%3D"
-    },
-    {
       "id": "841fa0f94052",
       "title": "Senior Software Engineer - Backend",
       "company": "HungerStation | هنقرستيشن",
@@ -74,30 +85,8 @@
       "city": "Riyadh",
       "platform": "LinkedIn",
       "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=7&pageNum=0&refId=8UgQHTJaz2HdFwNCoIKxjQ%3D%3D&trackingId=DnDa4cNJlLRvxQHonAr2xg%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=7&pageNum=0&refId=8UgQHTJaz2HdFwNCoIKxjQ%3D%3D&trackingId=DnDa4cNJlLRvxQHonAr2xg%3D%3D"
-    },
-    {
-      "id": "92fc98bb5ec4",
-      "title": "Senior PL/SQL Developer – Banking & ODS",
-      "company": "KALSOFT",
-      "location": "Riyadh Region",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-pl-sql-developer-%E2%80%93-banking-ods-at-kalsoft-4450897940?position=19&pageNum=0&refId=2g2%2FSSQlbPPfCkDdwJpG7w%3D%3D&trackingId=KQ5tW1uN0ko3HK%2BFAts3jw%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-pl-sql-developer-%E2%80%93-banking-ods-at-kalsoft-4450897940?position=19&pageNum=0&refId=2g2%2FSSQlbPPfCkDdwJpG7w%3D%3D&trackingId=KQ5tW1uN0ko3HK%2BFAts3jw%3D%3D"
-    },
-    {
-      "id": "13e980cdec0c",
-      "title": "Senior IBM BAW / BPM Developer",
-      "company": "KALSOFT",
-      "location": "Riyadh, Riyadh, Saudi Arabia",
-      "city": "Riyadh",
-      "platform": "LinkedIn",
-      "postedDate": "2026-08-14",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-bpm-developer-at-kalsoft-4451242310?position=17&pageNum=0&refId=2g2%2FSSQlbPPfCkDdwJpG7w%3D%3D&trackingId=WrRCMDARb67GQNnfg4itag%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-bpm-developer-at-kalsoft-4451242310?position=17&pageNum=0&refId=2g2%2FSSQlbPPfCkDdwJpG7w%3D%3D&trackingId=WrRCMDARb67GQNnfg4itag%3D%3D"
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=10&pageNum=0&refId=0FsgEFxuI4ZLVadgqWCgbg%3D%3D&trackingId=cjI3ajVgkMOVbsAHjXOMjw%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-software-engineer-backend-at-hungerstation-%D9%87%D9%86%D9%82%D8%B1%D8%B3%D8%AA%D9%8A%D8%B4%D9%86-4435406943?position=10&pageNum=0&refId=0FsgEFxuI4ZLVadgqWCgbg%3D%3D&trackingId=cjI3ajVgkMOVbsAHjXOMjw%3D%3D"
     },
     {
       "id": "60e1eccb69b4",
@@ -107,9 +96,20 @@
       "city": "Riyadh",
       "platform": "LinkedIn",
       "postedDate": "2026-08-13",
-      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=9&pageNum=0&refId=MRWNVFDoaMMMDBXXaoiXGQ%3D%3D&trackingId=Z7osJT8GCy99Zxlu6wMBcw%3D%3D",
-      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=9&pageNum=0&refId=MRWNVFDoaMMMDBXXaoiXGQ%3D%3D&trackingId=Z7osJT8GCy99Zxlu6wMBcw%3D%3D"
+      "applyUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=10&pageNum=0&refId=hw6LMmJQysWb2sUKfiPb0w%3D%3D&trackingId=%2FySM23OXKGCongbYHk1rng%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/product-developer-saudi-arabia-at-bmc-helix-4435578013?position=10&pageNum=0&refId=hw6LMmJQysWb2sUKfiPb0w%3D%3D&trackingId=%2FySM23OXKGCongbYHk1rng%3D%3D"
+    },
+    {
+      "id": "d77bba2d11c3",
+      "title": "Senior IBM BAW Developer",
+      "company": "Linnk Group",
+      "location": "Riyadh Region",
+      "city": "Riyadh",
+      "platform": "LinkedIn",
+      "postedDate": "2026-08-13",
+      "applyUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=8&pageNum=0&refId=Hzgq%2FWLxtWpuC%2FGKROlacg%3D%3D&trackingId=O96Kj5CFvd%2FVe0f1fPwVdg%3D%3D",
+      "jobUrl": "https://sa.linkedin.com/jobs/view/senior-ibm-baw-developer-at-linnk-group-4453680389?position=8&pageNum=0&refId=Hzgq%2FWLxtWpuC%2FGKROlacg%3D%3D&trackingId=O96Kj5CFvd%2FVe0f1fPwVdg%3D%3D"
     }
   ],
-  "lastUpdated": "2026-08-17T15:47:01Z"
+  "lastUpdated": "2026-08-18T05:42:08Z"
 }
