@@ -2,6 +2,7 @@
 """
 Data refresh script. Runs on a schedule via GitHub Actions (8 AM & 6 PM AST).
 Manual refresh: Actions → Sync → Run workflow, or push any non-data change to main.
+Last manual sync trigger: 2026-08-24
 """
 
 import os, json, time, hashlib, re, requests
