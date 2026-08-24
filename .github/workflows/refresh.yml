@@ -36,7 +36,6 @@ jobs:
           echo "Apify token is configured (${#APIFY_TOKEN} characters)."
       - name: Run update
         id: update
-        continue-on-error: true
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN || secrets.AMIPFY || secrets.APIFY_API_TOKEN || secrets.APIFY_API_KEY || vars.APIFY_TOKEN }}
         run: python scripts/scraper.py
