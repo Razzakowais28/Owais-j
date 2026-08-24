@@ -22,6 +22,7 @@ KEYWORDS = [
 
 MAX_AGE_DAYS = 7
 MAX_JOBS = 10
+SCRAPE_ERRORS = 0
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 JOBS_FILE = os.path.join(DATA_DIR, "items.json")
 SEEN_FILE = os.path.join(DATA_DIR, "seen.json")
@@ -178,6 +179,8 @@ def scrape_linkedin(keyword, location):
             })
         return results
     except Exception as e:
+        global SCRAPE_ERRORS
+        SCRAPE_ERRORS += 1
         print(f"  LinkedIn error: {e}")
         return []
 
@@ -211,6 +214,8 @@ def scrape_bayt(keyword, city):
             })
         return results
     except Exception as e:
+        global SCRAPE_ERRORS
+        SCRAPE_ERRORS += 1
         print(f"  Bayt error: {e}")
         return []
 
@@ -243,6 +248,8 @@ def scrape_naukrigulf(keyword, city):
             })
         return results
     except Exception as e:
+        global SCRAPE_ERRORS
+        SCRAPE_ERRORS += 1
         print(f"  NaukriGulf error: {e}")
         return []
 
@@ -293,8 +300,19 @@ def main():
         print("Use your personal API token from https://console.apify.com/account/integrations")
         raise SystemExit(1)
 
+    existing = load_json(JOBS_FILE, {"jobs": [], "lastUpdated": ""})
     scraped = scrape_all()
     merged = keep_top_developer_jobs(scraped)
+
+    if not merged:
+        if SCRAPE_ERRORS:
+            print(f"ERROR: Scrape failed ({SCRAPE_ERRORS} errors). Keeping existing feed.")
+            if existing.get("jobs"):
+                print(f"  Preserved {len(existing['jobs'])} roles from {existing.get('lastUpdated', 'previous sync')}.")
+            raise SystemExit(1)
+        if existing.get("jobs"):
+            print("No new developer roles found; keeping existing feed.")
+            return
 
     jobs_data = {
         "jobs": merged,
