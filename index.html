@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#f7f3ec">
 <title>Owais — Open roles</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,8 +119,6 @@
     padding-inline: 14px;
   }
   .btn:hover { border-color: var(--ink); }
-  .btn-refresh { background: var(--accent-soft); border-color: #cfe8df; color: var(--accent); font-weight: 600; }
-  .btn-refresh:disabled { opacity: 0.6; cursor: wait; }
   .count { margin-left: auto; font-size: 13px; color: var(--muted); }
 
   .section { margin-bottom: 28px; }
@@ -376,7 +371,6 @@
     .filter-panel .toolbar #cityFilter,
     .filter-panel .toolbar #platformFilter { width: 100%; }
     .filter-panel .toolbar .btn { width: 100%; }
-    .filter-panel .toolbar #refreshBtn { grid-column: 1 / -1; }
     .filter-panel .toolbar .count { display: none; }
 
     .board {
@@ -523,7 +517,6 @@
     </select>
     <button class="btn" type="button" onclick="clearFilters()">Clear</button>
     <button class="btn" type="button" onclick="downloadExcel()">Export</button>
-    <button class="btn btn-refresh" id="refreshBtn" type="button" onclick="refreshJobs()">↻ Refresh jobs</button>
     <span class="count count-desktop" id="countDesktop"></span>
   </div>
   </details>
@@ -549,8 +542,8 @@
         <div>Via Apify scrapers in <code>scripts/scraper.py</code>.</div>
       </div>
       <div class="source-item">
-        <strong>Auto refresh</strong>
-        <div>GitHub Actions · 8:00 AM & 6:00 PM AST</div>
+        <strong>Data snapshot</strong>
+        <div>Static file — no automatic sync.</div>
         <div id="sourceCounts">—</div>
       </div>
     </div>
@@ -732,35 +725,13 @@ function handleJobAction(event) {
 }
 
 async function fetchJobsJson() {
-  const url = `data/items.json?_=${Date.now()}`;
-  const res = await fetch(url, {
-    cache: 'no-store',
-    headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache'
-    }
-  });
+  const res = await fetch('data/items.json');
   if (!res.ok) throw new Error('fetch failed');
   return res.json();
 }
 
-async function refreshJobs() {
+async function loadJobs() {
   if (isLoading) return;
-  const btn = document.getElementById('refreshBtn');
-  btn.disabled = true;
-  btn.textContent = 'Refreshing…';
-  document.getElementById('loadingMsg').style.display = 'block';
-  document.getElementById('loadingMsg').textContent = 'Refreshing roles…';
-  try {
-    await loadJobs(true);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '↻ Refresh jobs';
-  }
-}
-
-async function loadJobs(isRefresh = false) {
-  if (isLoading && !isRefresh) return;
   isLoading = true;
   applied = loadApplied();
   syncLayoutMode();
@@ -793,7 +764,7 @@ async function loadJobs(isRefresh = false) {
     document.getElementById('lastUpdated').textContent = updatedLabel;
     filterTable();
   } catch (e) {
-    document.getElementById('loadingMsg').textContent = 'Could not load roles. Tap Refresh jobs.';
+    document.getElementById('loadingMsg').textContent = 'Could not load roles. Try reloading the page.';
   } finally {
     isLoading = false;
   }
@@ -908,14 +879,6 @@ function downloadExcel() {
 }
 
 loadJobs();
-
-window.addEventListener('pageshow', (e) => {
-  if (e.persisted) loadJobs(true);
-});
-
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') loadJobs(true);
-});
 </script>
 </body>
 </html>
